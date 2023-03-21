@@ -4,8 +4,6 @@ This repository's aim is to provide a set of open sourced GitHub actions to writ
 
 # Available Actions
 
----
-
 ## Magento Coding Standard
 Provides an action that can be used in your GitHub workflow to execute the latest [Magento Coding Standard](https://github.com/magento/magento-coding-standard).
 
@@ -13,7 +11,7 @@ Provides an action that can be used in your GitHub workflow to execute the lates
 In your GitHub repository add the below as
 `.github/workflows/coding-standard.yml`
 
-```
+```yaml
 name: M2 Coding Standard
 on:
   push:
@@ -39,7 +37,7 @@ Provides an action that can be used in your GitHub workflow to execute the PHP M
 In your GitHub repository add the below as
 `.github/workflows/mess-detector.yml`
 
-```
+```yaml
 name: M2 Mess Detector
 on:
   push:
@@ -54,4 +52,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+```
+---
+
+### How to run locally
+
+#### PHP Code Sniffer
+```shell
+./vendor/bin/phpcs --colors --extensions=php,phtml --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/
+```
+
+#### PHP Mess Detector
+```shell
+./vendor/bin/phpmd app/code/Ecommerce121/Modulw/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
 ```
