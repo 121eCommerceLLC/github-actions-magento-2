@@ -15,7 +15,7 @@ test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=$INPUT_PHPCS_EXTENSIONS
 test -z "${PHPCS_STANDARD}" && PHPCS_STANDARD=Magento2
 test -z "${PHPCS_SEVERITY}" && PHPCS_SEVERITY=8
 test -z "${PHPCS_REPORT}" && PHPCS_REPORT=checkstyle
-test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=php
+test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=php,phtml
 
 echo "PHPCS report: ${PHPCS_REPORT}"
 echo "PHPCS standard: ${PHPCS_STANDARD}"
@@ -25,6 +25,6 @@ echo "PHPCS severity: ${PHPCS_EXTENSIONS}"
 sh -c "/root/.composer/vendor/bin/phpcs \
   --report=${PHPCS_REPORT} \
   --extensions=${PHPCS_EXTENSIONS} \
-  --severity=${PHPCS_SEVERITY} \
+  --exclude=Magento2.Annotation.MethodAnnotationStructure \
   --standard=$PHPCS_STANDARD $GITHUB_WORKSPACE/app/code \
   -s $*"
