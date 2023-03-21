@@ -1,0 +1,9 @@
+name: 'Magento 2 Mess Detector'
+author: '121eCommerce LLC'
+description: 'Performs PHP static code analysis with the Magento 2 Mess Detector ruleset'
+runs:
+  using: 'docker'
+  image: 'docker://dmitryfurs/github-action-magento-mess-detector:latest'
+branding:
+  icon: 'code'
+  color: 'green'

@@ -1,0 +1,13 @@
+name: 'Magento 2 Coding Standard'
+author: '121eCommerce LLC'
+description: 'Performs PHP static code analysis with the Magento 2 Coding Standard'
+inputs:
+  phpcs_standard:
+    description: 'Path to your own PHPCS file or a specific standard. Leave empty to use "Magento2".'
+    required: false
+runs:
+  using: 'docker'
+  image: 'docker://dmitryfurs/github-action-magento-coding-standard:latest'
+branding:
+  icon: 'code'
+  color: 'green'
