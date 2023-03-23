@@ -15,7 +15,7 @@ test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=$INPUT_PHPCS_EXTENSIONS
 test -z "${PHPCS_STANDARD}" && PHPCS_STANDARD=Magento2
 test -z "${PHPCS_SEVERITY}" && PHPCS_SEVERITY=8
 test -z "${PHPCS_REPORT}" && PHPCS_REPORT=checkstyle
-test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=php,phtml
+test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=php,phtml,js,html,less
 
 echo "PHPCS report: ${PHPCS_REPORT}"
 echo "PHPCS standard: ${PHPCS_STANDARD}"
