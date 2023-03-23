@@ -24,7 +24,7 @@ jobs:
     name: M2 Coding Standard
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
 ```
 
@@ -50,7 +50,7 @@ jobs:
     name: M2 Mess Detector
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
 ```
 ---
