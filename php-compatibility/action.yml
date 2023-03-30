@@ -1,0 +1,14 @@
+name: 'PHP Compatibility'
+author: '121eCommerce LLC'
+description: 'Performs PHP static code analysis with the Magento 2 Coding Standard'
+inputs:
+  test-versions:
+    description: 'Versions to test as specified by PHP Compatibility composer package.'
+    required: false
+    default: '7.4-'
+runs:
+  using: 'docker'
+  image: 'docker://dmitryfurs/github-action-magento-php-compatibility:latest'
+branding:
+  icon: 'code'
+  color: 'green'
