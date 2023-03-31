@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="Magento 2 Coding Standard">
+    <description>Magento 2 Coding Standard</description>
+
+    <!-- Include all sniffs in the Magento2 standard. -->
+    <rule ref="Magento2" />
+
+    <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
+    <rule ref="MEQP2" />
+</ruleset>
