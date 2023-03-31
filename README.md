@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: DmitryFurs/github-action-magento-coding-standard/php-compatibility@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
         with:
           path_to_code: /app/code
           php_versions: 7.4-
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: DmitryFurs/github-action-magento-coding-standard/php-compatibility@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
         with:
           path_to_code: /app/design
           php_versions: 7.4-
