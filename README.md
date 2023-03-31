@@ -55,12 +55,22 @@ on:
   pull_request:
 
 jobs:
-  phpmd:
-    name: M2 Mess Detector
+  mess-detector-code:
+  name: M2 Mess Detector Code
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+      with:
+        path_to_code: /app/code
+  mess-detector-design:
+    name: M2 Mess Detector Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+        with:
+          path_to_code: /app/design
 ```
 ---
 
@@ -110,7 +120,7 @@ jobs:
 
 #### PHP Mess Detector
 ```shell
-./vendor/bin/phpmd app/code/Ecommerce121/Module/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
+./vendor/bin/phpmd app/code/Ecommerce121/Module/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml --suffixes php,phtml
 ```
 
 #### PHP Compatibility
