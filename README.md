@@ -75,7 +75,7 @@ jobs:
     name: PHP Compatibility Code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
         with:
           path_to_code: /app/code
@@ -84,7 +84,7 @@ jobs:
     name: PHP Compatibility Design
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
         with:
           path_to_code: /app/design
