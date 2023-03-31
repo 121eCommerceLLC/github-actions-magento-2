@@ -20,14 +20,23 @@ on:
   pull_request:
 
 jobs:
-  static:
-    name: M2 Coding Standard
+  coding-standard-code:
+    name: M2 Coding Standard Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+        with:
+          path_to_code: /app/code
+  coding-standard-design:
+    name: M2 Coding Standard Design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+        with:
+          path_to_code: /app/design
 ```
-
 ---
 
 ## Magento Mess Detector
