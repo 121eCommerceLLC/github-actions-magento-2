@@ -6,6 +6,10 @@ inputs:
     description: 'Versions to test as specified by PHP Compatibility composer package.'
     required: false
     default: '7.4-'
+  path_to_code:
+    description: 'Relative path to the code.'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'docker://dmitryfurs/github-action-magento-php-compatibility:latest'
