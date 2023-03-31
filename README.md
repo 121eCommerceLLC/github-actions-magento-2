@@ -56,13 +56,13 @@ on:
 
 jobs:
   mess-detector-code:
-  name: M2 Mess Detector Code
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
-      with:
-        path_to_code: /app/code
+    name: M2 Mess Detector Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+        with:
+          path_to_code: /app/code
   mess-detector-design:
     name: M2 Mess Detector Design
     runs-on: ubuntu-latest
