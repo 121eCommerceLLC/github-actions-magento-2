@@ -29,5 +29,5 @@ sh -c "/root/.composer/vendor/bin/phpcs \
   --report=${PHPCS_REPORT} \
   --extensions=${PHPCS_EXTENSIONS} \
   --exclude=Magento2.Annotation.MethodAnnotationStructure \
-  --standard=$PHPCS_STANDARD ${GITHUB_WORKSPACE}${PATH_TO_CODE} \
+  --standard=${PHPCS_STANDARD} ${GITHUB_WORKSPACE}${PATH_TO_CODE} \
   -s $*"
