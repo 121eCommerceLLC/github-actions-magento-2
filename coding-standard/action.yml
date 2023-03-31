@@ -6,10 +6,6 @@ inputs:
     description: 'Relative path to the code.'
     required: false
     default: ''
-  phpcs_standard:
-    description: 'Path to your own PHPCS file or a specific standard. Leave empty to use "Magento2".'
-    required: false
-    default: 'Magento2'
 runs:
   using: 'docker'
   image: 'docker://dmitryfurs/github-action-magento-coding-standard:latest'
