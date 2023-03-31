@@ -2,7 +2,11 @@ name: 'PHP Compatibility'
 author: '121eCommerce LLC'
 description: 'Performs PHP static code analysis with the Magento 2 Coding Standard'
 inputs:
-  test-versions:
+  path_to_code:
+    description: 'Relative path to the code.'
+    required: false
+    default: ''
+  php_versions:
     description: 'Versions to test as specified by PHP Compatibility composer package.'
     required: false
     default: '7.4-'

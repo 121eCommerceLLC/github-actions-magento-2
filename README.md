@@ -55,14 +55,56 @@ jobs:
 ```
 ---
 
+## PHP Compatibility
+Provides an action that can be used in your GitHub workflow to execute the PHP Compatibility rules for specific PHP version ([link](https://github.com/PHPCompatibility/PHPCompatibility)).
+
+#### How to use it
+In your GitHub repository add the below as
+`.github/workflows/php-compatibility.yml`
+
+```yaml
+name: PHP Compatibility
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  php-compatibility-code:
+    name: PHP Compatibility Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: DmitryFurs/github-action-magento-coding-standard/php-compatibility@main
+        with:
+          path_to_code: /app/code
+          php_versions: 7.4-
+  php-compatibility-design:
+    name: PHP Compatibility Design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: DmitryFurs/github-action-magento-coding-standard/php-compatibility@main
+        with:
+          path_to_code: /app/design
+          php_versions: 7.4-
+```
+---
+
 ### How to run locally
 
 #### PHP Code Sniffer
 ```shell
-./vendor/bin/phpcs --colors --extensions=php,phtml --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/
+./vendor/bin/phpcs -p --colors --extensions=php,phtml,js,html,less --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/Module/
 ```
 
 #### PHP Mess Detector
 ```shell
-./vendor/bin/phpmd app/code/Ecommerce121/Modulw/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
+./vendor/bin/phpmd app/code/Ecommerce121/Module/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
+```
+
+#### PHP Compatibility
+```shell
+./vendor/bin/phpcs -p --colors --extensions=php,phtml --standard=PHPCompatibility --runtime-set testVersion 7.4- app/code/Ecommerce121/Module/
 ```
