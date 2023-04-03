@@ -33,7 +33,7 @@ class InlineSniff implements Sniff
      *
      * @var string
      */
-    private $warningMessage = 'The inline styles ara bad practice and increase the size of html page.';
+    private $warningMessage = 'The inline styles are bad practice and increase the size of html page.';
 
     /**
      * Warning violation code.
