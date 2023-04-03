@@ -6,6 +6,10 @@ inputs:
     description: 'Relative path to the code.'
     required: false
     default: ''
+  phpcs_extensrions:
+    description: 'List of file extensions to check.'
+    required: false
+    default: 'php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP'
 runs:
   using: 'docker'
   image: 'docker://dmitryfurs/github-action-magento-coding-standard:latest'
