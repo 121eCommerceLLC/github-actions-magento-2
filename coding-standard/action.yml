@@ -6,7 +6,7 @@ inputs:
     description: 'Relative path to the code.'
     required: false
     default: ''
-  phpcs_extensrions:
+  phpcs_extensions:
     description: 'List of file extensions to check.'
     required: false
     default: 'php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP'
