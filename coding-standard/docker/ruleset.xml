@@ -2,6 +2,9 @@
 <ruleset name="Magento 2 Coding Standard">
     <description>Magento 2 Coding Standard</description>
 
+    <!-- File extensions to be checked. -->
+    <arg name="extensions" value="php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP" />
+
     <!-- Include all sniffs in the Magento2 standard. -->
     <rule ref="Magento2" />
 
