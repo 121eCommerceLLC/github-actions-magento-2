@@ -111,6 +111,43 @@ jobs:
 ```
 ---
 
+## Inline Styles
+Provides an action that can be used in your GitHub workflow to detect inline styles.
+
+#### How to use it
+In your GitHub repository add the below as
+`.github/workflows/inline-styles.yml`
+
+```yaml
+name: M2 Inline Styles
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  coding-standard-code:
+    name: M2 Inline Styles Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+        with:
+          path_to_code: /app/code
+          phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
+  coding-standard-design:
+    name: M2 Inline Styles Design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+        with:
+          path_to_code: /app/design
+          phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
+```
+---
+
 ### How to run locally
 
 #### PHP Code Sniffer
