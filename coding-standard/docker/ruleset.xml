@@ -3,10 +3,12 @@
     <description>Magento 2 Coding Standard</description>
 
     <!-- File extensions to be checked. -->
-    <arg name="extensions" value="php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP" />
+    <arg name="extensions" value="php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP,gz/FileType,tar/FileType,rar/FileType,zip/FileType,exe/FileType,tgz/FileType,tlz/FileType,tbz2/FileType,bak/FileType,back/FileType,asp/FileType,pass/FileType,shar/FileType,iso/FileType,bz2/FileType,lz/FileType,lz4/FileType,lzma/FileType,lzo/FileType,sz/FileType,xz/FileType,z/FileType,zst/FileType,7z/FileType,s7z/FileType,jar/FileType,sql/FileType" />
 
     <!-- Include all sniffs in the Magento2 standard. -->
-    <rule ref="Magento2" />
+    <rule ref="Magento2">
+        <exclude name="Magento2.Annotation.MethodAnnotationStructure" />
+    </rule>
 
     <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
     <rule ref="MEQP2" />

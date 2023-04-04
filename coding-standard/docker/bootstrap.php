@@ -7,7 +7,9 @@ declare(strict_types=1);
  */
 spl_autoload_register(function ($class) {
     // Only try & load our own classes.
-    if (stripos($class, 'PHP_CodeSniffer\Tokenizers\INLINECSS') !== 0) {
+    if (stripos($class, 'PHP_CodeSniffer\Tokenizers\INLINECSS') !== 0
+        && stripos($class, 'PHP_CodeSniffer\Tokenizers\FILETYPE') !== 0
+    ) {
         return;
     }
 
