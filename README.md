@@ -134,7 +134,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
         with:
           path_to_code: /app/code
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
@@ -143,7 +143,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
         with:
           path_to_code: /app/design
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
@@ -171,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
         with:
           path_to_code: /
           phpcs_extensions: gz/FileType,tar/FileType,rar/FileType,zip/FileType,exe/FileType,tgz/FileType,tlz/FileType,tbz2/FileType,bak/FileType,back/FileType,asp/FileType,pass/FileType,shar/FileType,iso/FileType,bz2/FileType,lz/FileType,lz4/FileType,lzma/FileType,lzo/FileType,sz/FileType,xz/FileType,z/FileType,zst/FileType,7z/FileType,s7z/FileType,jar/FileType,sql/FileType
@@ -182,7 +182,7 @@ jobs:
 
 #### PHP Code Sniffer
 ```shell
-./vendor/bin/phpcs -p --colors --extensions=php,phtml,js,html,less --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/Module/
+./vendor/bin/phpcs -p --colors --extensions=php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/Module/
 ```
 
 #### PHP Mess Detector

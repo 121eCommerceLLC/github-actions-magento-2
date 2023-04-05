@@ -12,4 +12,9 @@
 
     <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
     <rule ref="MEQP2" />
+
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*\.phtml$</exclude-pattern>
+        <exclude-pattern>*\.xml$</exclude-pattern>
+    </rule>
 </ruleset>
