@@ -2,11 +2,13 @@
 <ruleset name="Magento 2 Coding Standard">
     <description>Magento 2 Coding Standard</description>
 
-    <!-- File extensions to be checked. -->
-    <arg name="extensions" value="php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP" />
+    <!-- Override file extensions for analysis. -->
+    <rule ref="/extensions-override.xml" />
 
     <!-- Include all sniffs in the Magento2 standard. -->
-    <rule ref="Magento2" />
+    <rule ref="Magento2">
+        <exclude name="Magento2.Annotation.MethodAnnotationStructure" />
+    </rule>
 
     <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
     <rule ref="MEQP2" />

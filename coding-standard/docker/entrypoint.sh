@@ -13,15 +13,21 @@ test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=$INPUT_PHPCS_EXTENSIONS
 
 test -z "${PATH_TO_CODE}" && PATH_TO_CODE=/
 test -z "${PHPCS_REPORT}" && PHPCS_REPORT=checkstyle
-test -z "${PHPCS_EXTENSIONS}" && PHPCS_EXTENSIONS=php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP
 
 echo "PHPCS path to code: ${PATH_TO_CODE}"
 echo "PHPCS report: ${PHPCS_REPORT}"
 echo "PHPCS extensions: ${PHPCS_EXTENSIONS}"
 
-sh -c "/root/.composer/vendor/bin/phpcs \
-  --report=${PHPCS_REPORT} \
-  --extensions=${PHPCS_EXTENSIONS} \
-  --exclude=Magento2.Annotation.MethodAnnotationStructure \
-  --standard=/ruleset.xml --bootstrap=/bootstrap.php ${GITHUB_WORKSPACE}${PATH_TO_CODE} \
-  -s $*"
+if test -z "${PHPCS_EXTENSIONS}"
+then
+  sh -c "/root/.composer/vendor/bin/phpcs \
+    --report=${PHPCS_REPORT} \
+    --standard=/ruleset.xml --bootstrap=/bootstrap.php ${GITHUB_WORKSPACE}${PATH_TO_CODE} \
+    -s $*"
+else
+  sh -c "/root/.composer/vendor/bin/phpcs \
+    --report=${PHPCS_REPORT} \
+    --extensions=${PHPCS_EXTENSIONS} \
+    --standard=/ruleset.xml --bootstrap=/bootstrap.php ${GITHUB_WORKSPACE}${PATH_TO_CODE} \
+    -s $*"
+fi

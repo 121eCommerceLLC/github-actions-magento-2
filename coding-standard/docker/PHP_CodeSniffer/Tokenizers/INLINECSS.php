@@ -36,7 +36,7 @@ class INLINECSS extends Tokenizer
                 } else {
                     $style = current($matches);
 
-                    $column = stripos($content, 'style=');
+                    $column = stripos($content, self::ATTRIBUTE_STYLE);
 
                     $tokens[] = [
                         "code" => T_STRING,
