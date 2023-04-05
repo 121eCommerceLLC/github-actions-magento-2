@@ -33,7 +33,7 @@ class UnnecessaryFilesSniff implements Sniff
      *
      * @var string
      */
-    private $warningMessage = 'Unnecessary file found.';
+    private $warningMessage = 'Unnecessary files in the server should be removed to reduce risk of providing information to an attacker, affecting the performance of the site and reduce vulnerabilities.';
 
     /**
      * Warning violation code.

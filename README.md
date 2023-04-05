@@ -21,21 +21,23 @@ on:
 
 jobs:
   coding-standard-code:
-    name: M2 Coding Standard Code
+    name: M2 Coding Standard - Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
         with:
           path_to_code: /app/code
+          phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
   coding-standard-design:
-    name: M2 Coding Standard Design
+    name: M2 Coding Standard - Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
         with:
           path_to_code: /app/design
+          phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
 ```
 ---
 
@@ -56,7 +58,7 @@ on:
 
 jobs:
   mess-detector-code:
-    name: M2 Mess Detector Code
+    name: M2 Mess Detector - Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -64,7 +66,7 @@ jobs:
         with:
           path_to_code: /app/code
   mess-detector-design:
-    name: M2 Mess Detector Design
+    name: M2 Mess Detector - Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -91,7 +93,7 @@ on:
 
 jobs:
   php-compatibility-code:
-    name: PHP Compatibility Code
+    name: PHP Compatibility - Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -100,7 +102,7 @@ jobs:
           path_to_code: /app/code
           php_versions: 7.4-
   php-compatibility-design:
-    name: PHP Compatibility Design
+    name: PHP Compatibility - Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -128,7 +130,7 @@ on:
 
 jobs:
   coding-standard-code:
-    name: M2 Inline Styles Code
+    name: M2 Inline Styles - Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -137,7 +139,7 @@ jobs:
           path_to_code: /app/code
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
   coding-standard-design:
-    name: M2 Inline Styles Design
+    name: M2 Inline Styles - Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -145,6 +147,34 @@ jobs:
         with:
           path_to_code: /app/design
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
+```
+---
+
+## Unnecessary Files
+Provides an action that can be used in your GitHub workflow to detect unnecessary files.
+
+#### How to use it
+In your GitHub repository add the below as
+`.github/workflows/unnecessary-files.yml`
+
+```yaml
+name: Unnecessary Files
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unnecessary-files:
+    name: Unnecessary Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/ecommerce121-github-actions-magento-2/coding-standard@main
+        with:
+          path_to_code: /
+          phpcs_extensions: gz/FileType,tar/FileType,rar/FileType,zip/FileType,exe/FileType,tgz/FileType,tlz/FileType,tbz2/FileType,bak/FileType,back/FileType,asp/FileType,pass/FileType,shar/FileType,iso/FileType,bz2/FileType,lz/FileType,lz4/FileType,lzma/FileType,lzo/FileType,sz/FileType,xz/FileType,z/FileType,zst/FileType,7z/FileType,s7z/FileType,jar/FileType,sql/FileType
 ```
 ---
 

@@ -13,7 +13,7 @@ class FILETYPE extends Tokenizer
             [
                 "code" => T_STRING,
                 "type" => 'T_STRING',
-                // "content" => '',
+                "content" => '',
             ],
         ];
     }
