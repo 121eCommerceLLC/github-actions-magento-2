@@ -1,0 +1,18 @@
+name: 'Magento 2 PhpStan'
+author: '121eCommerce LLC'
+description: 'Performs php static code analysis with the Magento 2 PhpStan ruleset.'
+inputs:
+  path_to_code:
+    description: 'Relative path to the code. (Default: /)'
+    required: false
+    default: ''
+  level:
+    description: 'PHPStan level to check. (Default: 1)'
+    required: false
+    default: '1'
+runs:
+  using: 'docker'
+  image: 'docker://dmitryfurs/github-action-magento-phpstan:latest'
+branding:
+  icon: 'code'
+  color: 'purple'
