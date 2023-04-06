@@ -178,6 +178,34 @@ jobs:
 ```
 ---
 
+## Magento PHP Stan
+Provides an action that can be used in your GitHub workflow to execute the PHPStan rules included in Magento 2 [link](https://github.com/magento/magento2/blob/2.3.5-p1/dev/tests/static/framework/Magento/TestFramework/CodingStandard/Tool/PhpStan.php).
+
+#### How to use it
+In your GitHub repository add the below as
+`.github/workflows/phpstan.yml`
+
+```yaml
+name: M2 PHPStan
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  phpstan-code:
+    name: M2 PHPStan - Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@main
+        with:
+          path_to_code: /app/code
+          level: 1
+```
+---
+
 ### How to run locally
 
 #### PHP Code Sniffer
@@ -193,4 +221,19 @@ jobs:
 #### PHP Compatibility
 ```shell
 ./vendor/bin/phpcs -p --colors --extensions=php,phtml --standard=PHPCompatibility --runtime-set testVersion 7.4- app/code/Ecommerce121/Module/
+```
+
+#### PHP Stan
+To run `phpstan`, the preparation commands must be executed:
+```shell
+composer require --dev phpstan/phpstan --no-install
+composer require --dev bitexpert/phpstan-magento --no-install
+composer require --dev phpstan/extension-installer --no-install
+composer config --no-plugins allow-plugins.phpstan/extension-installer true
+composer install
+```
+
+Then the following command can be executed:
+```shell
+./vendor/bin/phpstan analyze app/code/Ecommerce121/Module/ --level 1 --configuration dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
 ```
