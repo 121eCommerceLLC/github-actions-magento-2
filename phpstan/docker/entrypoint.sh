@@ -15,9 +15,7 @@ echo "PHPStan Level: ${LEVEL}"
 echo "Run Command \"bin/magento setup:di:compile\": ${SETUP_DI_COMPILE}"
 
 echo "Run \"composer install\""
-sh -c "composer require --dev phpstan/phpstan --no-install --no-interaction"
-sh -c "composer require --dev bitexpert/phpstan-magento --no-install --no-interaction"
-sh -c "composer require --dev phpstan/extension-installer --no-install --no-interaction"
+sh -c "composer require --dev phpstan/phpstan bitexpert/phpstan-magento phpstan/extension-installer --no-install --no-interaction"
 sh -c "composer config --no-plugins allow-plugins.phpstan/extension-installer true"
 sh -c "composer install --ignore-platform-reqs --no-interaction --no-progress"
 

@@ -12,7 +12,7 @@ inputs:
     default: '7.4-'
 runs:
   using: 'docker'
-  image: 'docker://dmitryfurs/github-action-magento-php-compatibility:latest'
+  image: 'docker://dmitryfurs/github-action-magento-php-compatibility:1.0.0'
 branding:
   icon: 'code'
   color: 'green'
