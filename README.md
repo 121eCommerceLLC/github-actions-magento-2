@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
         with:
           path_to_code: /app/code
           phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
         with:
           path_to_code: /app/design
           phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
         with:
           path_to_code: /app/code
   mess-detector-design:
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
         with:
           path_to_code: /app/design
 ```
@@ -99,7 +99,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@main
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Run "composer install"
+        run: composer install --prefer-dist --no-progress
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
         with:
           path_to_code: /app/code
   mess-detector-full-design:
@@ -107,12 +118,63 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@main
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Run "composer install"
+        run: composer install --prefer-dist --no-progress
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
         with:
           path_to_code: /app/design
 ```
 
 During the operation of this action, the `composer install` command is executed, which leads to an increase in execution time. It is also possible to use a mixed workflow: check the `app/code` folder with a full action, and the `app/design` folder with a stripped-down one, since specific rules do not affect files in the `app/design` folder.
+
+```yaml
+name: M2 Mess Detector
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  mess-detector-code:
+    name: M2 Mess Detector - Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Run "composer install"
+        run: composer install --prefer-dist --no-progress
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
+        with:
+          path_to_code: /app/code
+  mess-detector-design:
+    name: M2 Mess Detector - Design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
+        with:
+          path_to_code: /app/design
+```
+
+> To speed up the action, an additional [cache](https://github.com/marketplace/actions/cache) component is used. This component caches Composer dependencies.
 
 ---
 
@@ -137,7 +199,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@1.0.0
         with:
           path_to_code: /app/code
           php_versions: 7.4-
@@ -146,7 +208,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@1.0.0
         with:
           path_to_code: /app/design
           php_versions: 7.4-
@@ -181,7 +243,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
         with:
           path_to_code: /app/code
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
@@ -190,7 +252,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
         with:
           path_to_code: /app/design
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
@@ -218,11 +280,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@main
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
         with:
           path_to_code: /
           phpcs_extensions: gz/FileType,tar/FileType,rar/FileType,zip/FileType,exe/FileType,tgz/FileType,tlz/FileType,tbz2/FileType,bak/FileType,back/FileType,asp/FileType,pass/FileType,shar/FileType,iso/FileType,bz2/FileType,lz/FileType,lz4/FileType,lzma/FileType,lzo/FileType,sz/FileType,xz/FileType,z/FileType,zst/FileType,7z/FileType,s7z/FileType,jar/FileType,sql/FileType
 ```
+
+To add an additional file type for checking, you need to add it to the `phpcs_extensions` parameter with the postfix `/FileType`. For example, if we need to add `sql` extension, then add `sql/FileType` to the existing file types separated by comma.
+
 ---
 
 ## Magento PHP Stan
@@ -246,11 +311,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@main
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Run "composer install"
+        run: composer install --prefer-dist --no-progress
+      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@1.0.0
         with:
           path_to_code: /app/code
           level: 1
 ```
+
+> To speed up the action, an additional [cache](https://github.com/marketplace/actions/cache) component is used. This component caches Composer dependencies.
 
 If you want to use PHPStan but your codebase isn’t up to speed with strong typing and PHPStan’s strict checks, you can currently choose from 10 [levels](https://phpstan.org/user-guide/rule-levels) (`0` is the loosest and `9` is the strictest) by passing `level` to the action.
 
