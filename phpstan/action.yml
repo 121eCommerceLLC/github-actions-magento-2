@@ -16,7 +16,7 @@ inputs:
     default: '1'
 runs:
   using: 'docker'
-  image: 'docker://dmitryfurs/github-action-magento-phpstan:dev'
+  image: 'docker://dmitryfurs/github-action-magento-phpstan:1.0.0'
 branding:
   icon: 'code'
   color: 'purple'
