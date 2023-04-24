@@ -8,6 +8,7 @@
     <!-- Include all sniffs in the Magento2 standard. -->
     <rule ref="Magento2">
         <exclude name="Magento2.Annotation.MethodAnnotationStructure" />
+        <exclude name="Magento2.Annotation.MethodArguments.NoCommentBlock" />
     </rule>
 
     <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
