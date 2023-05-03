@@ -55,24 +55,21 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  mess-detector-code:
-    name: M2 Mess Detector - Code
+  mess-detector:
+    name: M2 Mess Detector
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
         with:
-          path_to_code: /app/code
-  mess-detector-design:
-    name: M2 Mess Detector - Design
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
-        with:
-          path_to_code: /app/design
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
 ```
 
 In the example above, the specific rules provided by Magento will not be used for checking.
@@ -92,46 +89,21 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  mess-detector-full-code:
-    name: M2 Mess Detector Full - Code
+  mess-detector:
+    name: M2 Mess Detector
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
       - uses: actions/checkout@v3
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Run "composer install"
-        run: composer install --prefer-dist --no-progress
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
-        with:
-          path_to_code: /app/code
-  mess-detector-full-design:
-    name: M2 Mess Detector - Design
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Run "composer install"
-        run: composer install --prefer-dist --no-progress
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
-        with:
-          path_to_code: /app/design
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
 ```
 
 During the operation of this action, the `composer install` command is executed, which leads to an increase in execution time. It is also possible to use a mixed workflow: check the `app/code` folder with a full action, and the `app/design` folder with a stripped-down one, since specific rules do not affect files in the `app/design` folder.
@@ -143,34 +115,26 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
   mess-detector-code:
-    name: M2 Mess Detector - Code
+    name: M2 Mess Detector
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Run "composer install"
-        run: composer install --prefer-dist --no-progress
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@1.0.0
-        with:
+          php_version: 7.4
           path_to_code: /app/code
   mess-detector-design:
     name: M2 Mess Detector - Design
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@1.0.0
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
         with:
+          php_version: 7.4
           path_to_code: /app/design
 ```
 
