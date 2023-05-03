@@ -26,7 +26,7 @@ inputs:
     required: false
     default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: actions/checkout@v3
     - name: Setup PHP Action
