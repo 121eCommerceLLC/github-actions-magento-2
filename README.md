@@ -62,6 +62,7 @@ jobs:
     name: M2 Mess Detector
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
@@ -96,6 +97,7 @@ jobs:
     name: M2 Mess Detector
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
@@ -268,28 +270,23 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  phpstan-code:
-    name: M2 PHPStan - Code
+  phpstan:
+    name: M2 PHPStan
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
       - uses: actions/checkout@v3
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Run "composer install"
-        run: composer install --prefer-dist --no-progress
-      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@1.0.0
-        with:
-          path_to_code: /app/code
-          level: 1
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
+          phpstan-level: 1
 ```
 
 > To speed up the action, an additional [cache](https://github.com/marketplace/actions/cache) component is used. This component caches Composer dependencies.
