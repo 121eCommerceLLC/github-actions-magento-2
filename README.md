@@ -18,26 +18,22 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  coding-standard-code:
+  coding-standard:
     name: M2 Coding Standard - Code
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@v2
         with:
-          path_to_code: /app/code
-          phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
-  coding-standard-design:
-    name: M2 Coding Standard - Design
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
-        with:
-          path_to_code: /app/design
-          phpcs_extensions: php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
+          magento-coding-standard-version: 'v31'
 ```
 ---
 
@@ -185,6 +181,49 @@ jobs:
     - You can omit one part of the range if you want to support everything above or below a particular version, i.e. use `php-compatibility-test-versions: 7.4-` to run all the checks for PHP 7.4 and above.
 ---
 
+## Magento PHP Stan
+Provides an action that can be used in your GitHub workflow to execute the [PHPStan rules](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/framework/Magento/TestFramework/CodingStandard/Tool/PhpStan.php) included in Magento 2.
+
+### How to use it
+In your GitHub repository add the below as
+`.github/workflows/phpstan.yml`
+
+```yaml
+name: M2 PHPStan
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  phpstan:
+    name: M2 PHPStan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
+        with:
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
+          phpstan-level: 1
+```
+
+> To speed up the action, an additional [cache](https://github.com/marketplace/actions/cache) component is used. This component caches Composer dependencies.
+
+If you want to use PHPStan but your codebase isn’t up to speed with strong typing and PHPStan’s strict checks, you can currently choose from 10 [levels](https://phpstan.org/user-guide/rule-levels) (`0` is the loosest and `9` is the strictest) by passing `phpstan-level` to the action.
+
+The default level is `1`. You can also use `phpstan-level: max` as an alias for the highest level. This will ensure that you will always use the highest level when upgrading to new versions of PHPStan.
+
+> Please note that this can create a significant obstacle when upgrading to a newer version because you might have to fix a lot of code to bring the number of errors down to zero.
+
+---
+
 ## Inline Styles
 Provides an action that can be used in your GitHub workflow to detect inline styles.
 
@@ -250,50 +289,6 @@ jobs:
 ```
 
 To add an additional file type for checking, you need to add it to the `phpcs_extensions` parameter with the postfix `/FileType`. For example, if we need to add `sql` extension, then add `sql/FileType` to the existing file types separated by comma.
-
----
-
-## Magento PHP Stan
-Provides an action that can be used in your GitHub workflow to execute the [PHPStan rules](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/framework/Magento/TestFramework/CodingStandard/Tool/PhpStan.php) included in Magento 2.
-
-### How to use it
-In your GitHub repository add the below as
-`.github/workflows/phpstan.yml`
-
-```yaml
-name: M2 PHPStan
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-jobs:
-  phpstan:
-    name: M2 PHPStan
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        path_to_code: ['/app/code', '/app/design']
-    steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
-        with:
-          php_version: 7.4
-          path_to_code: ${{ matrix.path_to_code }}
-          phpstan-level: 1
-```
-
-> To speed up the action, an additional [cache](https://github.com/marketplace/actions/cache) component is used. This component caches Composer dependencies.
-
-If you want to use PHPStan but your codebase isn’t up to speed with strong typing and PHPStan’s strict checks, you can currently choose from 10 [levels](https://phpstan.org/user-guide/rule-levels) (`0` is the loosest and `9` is the strictest) by passing `level` to the action.
-
-The default level is `1`. You can also use `level: max` as an alias for the highest level. This will ensure that you will always use the highest level when upgrading to new versions of PHPStan.
-
-> Please note that this can create a significant obstacle when upgrading to a newer version because you might have to fix a lot of code to bring the number of errors down to zero.
-
 ---
 
 ## Customization
@@ -310,17 +305,17 @@ If we need to check several folders, then we can add them all within one workflo
 
 ### PHP Code Sniffer
 ```shell
-./vendor/bin/phpcs -p --colors --extensions=php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure app/code/Ecommerce121/Module/
+./vendor/bin/phpcs -p --colors --extensions=php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP --standard=Magento2 --exclude=Magento2.Annotation.MethodAnnotationStructure ./app/code/Ecommerce121/Module/
 ```
 
 ### PHP Mess Detector
 ```shell
-./vendor/bin/phpmd app/code/Ecommerce121/Module/ ansi dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml --suffixes php,phtml
+./vendor/bin/phpmd ./app/code/Ecommerce121/Module/ ansi ./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml --suffixes php,phtml
 ```
 
 ### PHP Compatibility
 ```shell
-./vendor/bin/phpcs -p --colors --extensions=php,phtml --standard=PHPCompatibility --runtime-set testVersion 7.4- app/code/Ecommerce121/Module/
+./vendor/bin/phpcs -p --colors --extensions=php,phtml --standard=PHPCompatibility --runtime-set testVersion 7.4- ./app/code/Ecommerce121/Module/
 ```
 
 ### PHP Stan
@@ -335,5 +330,5 @@ composer install
 
 Then the following command can be executed:
 ```shell
-./vendor/bin/phpstan analyze app/code/Ecommerce121/Module/ --level 1 --configuration dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
+./vendor/bin/phpstan analyze ./app/code/Ecommerce121/Module/ --level 1 --configuration ./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
 ```
