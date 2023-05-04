@@ -25,6 +25,15 @@
        -s command line argument when checking a file.
     -->
     <rule ref="PHPCompatibility">
+        <!--
+           Magento often uses classes whose name is `Attribute`, but these classes are in the namespace,
+           for example: `\Magento\Catalog\Model\ResourceModel\Eav\Attribute`.
+
+           But at the moment there is a problem in the standards.
+           @see https://github.com/PHPCompatibility/PHPCompatibility/issues/1291
+
+           After fixing this problem, the exception can be removed.
+        -->
         <exclude name="PHPCompatibility.Classes.NewClasses.attributeFound" />
     </rule>
 </ruleset>

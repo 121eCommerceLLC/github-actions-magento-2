@@ -158,34 +158,31 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
-  php-compatibility-code:
-    name: PHP Compatibility - Code
+  php-compatibility:
+    name: PHP Compatibility
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
       - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@1.0.0
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@v2
         with:
-          path_to_code: /app/code
-          php_versions: 7.4-
-  php-compatibility-design:
-    name: PHP Compatibility - Design
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@1.0.0
-        with:
-          path_to_code: /app/design
-          php_versions: 7.4-
+          php_version: 7.4
+          path_to_code: ${{ matrix.path_to_code }}
+          php-compatibility-test-versions: 7.4-
 ```
 
 ### Sniffing your code for compatibility with specific PHP version(s)
 
-- To get the most out of the PHPCompatibility standard, you should [specify](https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions) a `php_versions` to check against. That will enable the checks for both deprecated/removed PHP features as well as the detection of code using new PHP features.
-    - You can run the checks for just one specific PHP version by adding `php_versions: 7.4` to step arguments.
-    - You can also specify a range of PHP versions that your code needs to support. In this situation, compatibility issues that affect any of the PHP versions in that range will be reported: `php_versions: 7.4-8.2`.
-    - You can omit one part of the range if you want to support everything above or below a particular version, i.e. use `php_versions: 7.4-` to run all the checks for PHP 7.4 and above.
+- To get the most out of the PHPCompatibility standard, you should [specify](https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions) a `php-compatibility-test-versions` to check against. That will enable the checks for both deprecated/removed PHP features as well as the detection of code using new PHP features.
+    - You can run the checks for just one specific PHP version by adding `php-compatibility-test-versions: 7.4` to step arguments.
+    - You can also specify a range of PHP versions that your code needs to support. In this situation, compatibility issues that affect any of the PHP versions in that range will be reported: `php-compatibility-test-versions: 7.4-8.2`.
+    - You can omit one part of the range if you want to support everything above or below a particular version, i.e. use `php-compatibility-test-versions: 7.4-` to run all the checks for PHP 7.4 and above.
 ---
 
 ## Inline Styles
