@@ -228,7 +228,7 @@ In your GitHub repository add the below as
 `.github/workflows/inline-styles.yml`
 
 ```yaml
-name: M2 Inline Styles
+name: Inline Styles
 on:
   push:
     branches:
@@ -237,25 +237,20 @@ on:
     branches:
       - main
 jobs:
-  coding-standard-code:
-    name: M2 Inline Styles - Code
+  inline-styles:
+    name: Inline Styles
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
+      - uses: 121eCommerceLLC/github-actions-magento-2/inline-styles@v2
         with:
-          path_to_code: /app/code
-          phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
-  coding-standard-design:
-    name: M2 Inline Styles - Design
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
-        with:
-          path_to_code: /app/design
-          phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
+          path_to_code: ${{ matrix.path_to_code }}
 ```
+
+To add an additional file type for checking, you need to add it to the `extensions` parameter. For example, if we need to add `js` extension, then add ` js` to the existing file types separated by space.
 
 ---
 
