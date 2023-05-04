@@ -17,10 +17,11 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v3
-    - id: find-files
+    - name: Detect Unnecessary Files
       run: |
+        found=false
         cd ${{ github.workspace }}${{ inputs.path_to_code }}
-        extensions=(${{ inputs.filetypes }})
+        extensions=(${{ inputs.extensions }})
         for extension in ${extensions[@]}; do
           for file in $(find $(pwd -P) -type f -name '*.'${extension}); do
             found=true

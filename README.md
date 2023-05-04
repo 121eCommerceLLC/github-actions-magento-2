@@ -35,6 +35,7 @@ jobs:
           path_to_code: ${{ matrix.path_to_code }}
           magento-coding-standard-version: 'v31'
 ```
+
 ---
 
 ## Magento Mess Detector
@@ -62,7 +63,6 @@ jobs:
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
         with:
           php_version: 7.4
@@ -97,7 +97,6 @@ jobs:
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
         with:
           php_version: 7.4
@@ -120,7 +119,6 @@ jobs:
     name: M2 Mess Detector
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
         with:
           php_version: 7.4
@@ -129,7 +127,6 @@ jobs:
     name: M2 Mess Detector - Design
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
         with:
           php_version: 7.4
@@ -165,7 +162,6 @@ jobs:
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@v2
         with:
           php_version: 7.4
@@ -179,6 +175,7 @@ jobs:
     - You can run the checks for just one specific PHP version by adding `php-compatibility-test-versions: 7.4` to step arguments.
     - You can also specify a range of PHP versions that your code needs to support. In this situation, compatibility issues that affect any of the PHP versions in that range will be reported: `php-compatibility-test-versions: 7.4-8.2`.
     - You can omit one part of the range if you want to support everything above or below a particular version, i.e. use `php-compatibility-test-versions: 7.4-` to run all the checks for PHP 7.4 and above.
+
 ---
 
 ## Magento PHP Stan
@@ -206,7 +203,6 @@ jobs:
       matrix:
         path_to_code: ['/app/code', '/app/design']
     steps:
-      - uses: actions/checkout@v3
       - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
         with:
           php_version: 7.4
@@ -238,7 +234,8 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
   coding-standard-code:
     name: M2 Inline Styles - Code
@@ -259,6 +256,7 @@ jobs:
           path_to_code: /app/design
           phpcs_extensions: php/InlineCss,phtml/InlineCss,html/InlineCss
 ```
+
 ---
 
 ## Unnecessary Files
@@ -285,7 +283,8 @@ jobs:
       - uses: 121eCommerceLLC/github-actions-magento-2/unnecessary-files@v2
 ```
 
-To add an additional file type for checking, you need to add it to the `phpcs_extensions` parameter with the postfix `/FileType`. For example, if we need to add `sql` extension, then add `sql/FileType` to the existing file types separated by comma.
+To add an additional file type for checking, you need to add it to the `extensions` parameter. For example, if we need to add `sql` extension, then add ` sql` to the existing file types separated by space.
+
 ---
 
 ## Customization
