@@ -1,0 +1,33 @@
+name: Unnecessary Files
+author: 121eCommerce LLC
+description: Performs search for unnecessary files by the extension list.
+branding:
+  icon: code
+  color: green
+inputs:
+  extensions:
+    description: File Extensions.
+    required: false
+    default: 7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store
+  path_to_code:
+    description: Relative path to the code.
+    required: false
+    default: /
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - id: find-files
+      run: |
+        cd ${{ github.workspace }}${{ inputs.path_to_code }}
+        extensions=(${{ inputs.filetypes }})
+        for extension in ${extensions[@]}; do
+          for file in $(find $(pwd -P) -type f -name '*.'${extension}); do
+            found=true
+            echo "::error file=$file::Unnecessary files in the server should be removed to reduce risk of providing information to an attacker, affecting the performance of the site and reduce vulnerabilities."
+          done
+        done
+        if [ $found == 'true' ]; then
+          exit 1
+        fi
+      shell: bash

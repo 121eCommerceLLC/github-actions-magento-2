@@ -275,17 +275,14 @@ on:
     branches:
       - main
   pull_request:
-
+    branches:
+      - main
 jobs:
   unnecessary-files:
     name: Unnecessary Files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@1.0.0
-        with:
-          path_to_code: /
-          phpcs_extensions: gz/FileType,tar/FileType,rar/FileType,zip/FileType,exe/FileType,tgz/FileType,tlz/FileType,tbz2/FileType,bak/FileType,back/FileType,asp/FileType,pass/FileType,shar/FileType,iso/FileType,bz2/FileType,lz/FileType,lz4/FileType,lzma/FileType,lzo/FileType,sz/FileType,xz/FileType,z/FileType,zst/FileType,7z/FileType,s7z/FileType,jar/FileType,sql/FileType
+      - uses: 121eCommerceLLC/github-actions-magento-2/unnecessary-files@v2
 ```
 
 To add an additional file type for checking, you need to add it to the `phpcs_extensions` parameter with the postfix `/FileType`. For example, if we need to add `sql` extension, then add `sql/FileType` to the existing file types separated by comma.
