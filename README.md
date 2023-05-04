@@ -27,13 +27,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@v2
         with:
           php_version: 7.4
           path_to_code: ${{ matrix.path_to_code }}
-          magento-coding-standard-version: 'v31'
+          magento-coding-standard-version: v31
 ```
 
 ---
@@ -61,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
         with:
@@ -95,7 +95,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
         with:
@@ -116,7 +116,7 @@ on:
       - main
 jobs:
   mess-detector-code:
-    name: M2 Mess Detector
+    name: M2 Mess Detector - Code
     runs-on: ubuntu-latest
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
@@ -160,7 +160,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@v2
         with:
@@ -201,7 +201,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
         with:
@@ -243,7 +243,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path_to_code: ['/app/code', '/app/design']
+        path_to_code: [ /app/code, /app/design ]
     steps:
       - uses: 121eCommerceLLC/github-actions-magento-2/inline-styles@v2
         with:
