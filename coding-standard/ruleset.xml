@@ -2,16 +2,13 @@
 <ruleset name="Magento 2 Coding Standard">
     <description>Magento 2 Coding Standard</description>
 
-    <!-- Override file extensions for analysis. -->
-    <rule ref="/extensions-override.xml" />
-
     <!-- Include all sniffs in the Magento2 standard. -->
     <rule ref="Magento2">
         <exclude name="Magento2.Annotation.MethodAnnotationStructure" />
     </rule>
 
-    <!-- Include ObjectManager sniffs in the MEQP2 standard. -->
-    <rule ref="MEQP2" />
+    <!-- Include ObjectManager sniffs in the Ecommerce121 standard. -->
+    <rule ref="Ecommerce121" />
 
     <rule ref="Generic.Files.LineLength">
         <exclude-pattern>*\.phtml$</exclude-pattern>
