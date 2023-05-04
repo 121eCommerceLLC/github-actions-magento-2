@@ -20,7 +20,7 @@ inputs:
   magento-coding-standard-version:
     description: PHP Compatibility Composer Version.
     required: false
-    default: *
+    default: '*'
   path_to_code:
     description: Relative path to the code.
     required: false

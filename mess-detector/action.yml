@@ -28,7 +28,7 @@ inputs:
   phpmd-version:
     description: PHP Mess Detector Composer Version.
     required: false
-    default: *
+    default: '*'
   skip-cache:
     description: Skip composer cache.
     required: false
