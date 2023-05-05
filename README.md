@@ -574,7 +574,7 @@ The following arguments are common to many of the actions described above.
   The argument is used to provide an opportunity to specify a custom PHP version.
   <br />
 
-  To configure PHP, a third party action [shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action) is used.
+  To configure PHP, a third party action [`shivammathur/setup-php`](https://github.com/marketplace/actions/setup-php-action) is used.
   <br />
 
   In order to specify the desired version, you need to select the supported version from the [list](https://github.com/marketplace/actions/setup-php-action#tada-php-support). Supported versions are from PHP 5.6 to PHP 8.3.
