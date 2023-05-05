@@ -48,7 +48,7 @@ runs:
         echo "dir-vendor=$(composer global config vendor-dir --absolute --quiet)" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore Composer Cache
-      if: ${{ !inputs.skip-cache }}
+      if: ${{ inputs.skip-cache != 'true' }}
       id: cache
       uses: actions/cache/restore@v3
       with:
@@ -58,7 +58,7 @@ runs:
       run: composer install --prefer-dist --no-progress
       shell: bash
     - name: Save Composer Cache
-      if: ${{ steps.cache.outputs.cache-hit != 'true' && !inputs.skip-cache }}
+      if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
       uses: actions/cache/save@v3
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
