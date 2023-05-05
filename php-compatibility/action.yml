@@ -1,51 +1,53 @@
-name: PHP Compatibility
-author: 121eCommerce LLC
-description: Performs PHP static code analysis with the PHP Compatibility Standard
+name: 'PHP Compatibility'
+author: '121eCommerce LLC'
+description: 'Performs PHP static code analysis with the PHP Compatibility Standard'
 branding:
-  icon: code
-  color: green
+  icon: 'code'
+  color: 'green'
 inputs:
-  php_version:
-    description: PHP Version
+  php-version:
+    description: 'PHP Version'
     required: false
-    default: 8.2
-  php_extensions:
-    description: PHP Extensions
+    default: '8.2'
+  php-extensions:
+    description: 'PHP Extensions'
     required: false
-    default: gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip
-  composer_version:
-    description: Composer Version
+    default: 'gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip'
+  composer-version:
+    description: 'Composer Version'
     required: false
-    default: v2
-  path_to_code:
-    description: Relative path to the code.
-    required: false
-    default: /
-  ruleset:
-    description: Relative path to ruleset file.
-    required: false
+    default: 'v2'
   php-compatibility-version:
-    description: PHP Compatibility Composer Version.
+    description: 'PHP Compatibility Composer Version.'
     required: false
-    default: 10.x-dev
+    default: '10.x-dev'
+  path-to-code:
+    description: 'Relative path to the code.'
+    required: false
+    default: '/'
+  php-compatibility-ruleset:
+    description: 'Relative path to ruleset file.'
+    required: false
+    default: ''
   php-compatibility-test-versions:
-    description: PHP Compatibility testVersions.
+    description: 'PHP Compatibility testVersions.'
     required: false
-    default: 7.4-
+    default: '8.2-'
   skip-cache:
-    description: Skip composer cache.
+    description: 'Skip composer cache.'
     required: false
+    default: 'false'
 runs:
-  using: composite
+  using: 'composite'
   steps:
     - uses: actions/checkout@v3
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
         coverage: none
-        php-version: ${{ inputs.php_version }}
-        tools: composer:${{ inputs.composer_version }}
-        extensions: ${{ inputs.php_extensions }}
+        php-version: ${{ inputs.php-version }}
+        tools: composer:${{ inputs.composer-version }}
+        extensions: ${{ inputs.php-extensions }}
     - name: Get Composer global directories
       id: composer
       run: |
@@ -75,22 +77,22 @@ runs:
       run: echo '::add-matcher::${{ github.action_path }}/problem-matcher.json'
       shell: bash
     - name: Run specific ruleset
-      if:  ${{ inputs.ruleset }}
+      if:  ${{ inputs.php-compatibility-ruleset }}
       run: >
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=php,phtml
         --standard=${{ github.workspace }}${{ inputs.ruleset }}
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        ${{ github.workspace }}${{ inputs.path_to_code }}
+        ${{ github.workspace }}${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
-      if:  ${{ !inputs.ruleset }}
+      if:  ${{ !inputs.php-compatibility-ruleset }}
       run: >
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=php,phtml
         --standard=${{ github.action_path }}/ruleset.xml
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        ${{ github.workspace }}${{ inputs.path_to_code }}
+        ${{ github.workspace }}${{ inputs.path-to-code }}
       shell: bash

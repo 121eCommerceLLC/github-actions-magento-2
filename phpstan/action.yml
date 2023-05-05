@@ -1,52 +1,53 @@
-name: Magento 2 PHPStan
-author: 121eCommerce LLC
-description: Performs php static code analysis with the Magento 2 PHPStan configuration.
+name: 'Magento 2 PHPStan'
+author: '121eCommerce LLC'
+description: 'Performs php static code analysis with the Magento 2 PHPStan configuration.'
 branding:
-  icon: code
-  color: green
+  icon: 'code'
+  color: 'green'
 inputs:
-  php_version:
-    description: PHP Version
+  php-version:
+    description: 'PHP Version'
     required: false
-    default: 8.2
-  php_extensions:
-    description: PHP Extensions
+    default: '8.2'
+  php-extensions:
+    description: 'PHP Extensions'
     required: false
-    default: gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip
-  composer_version:
-    description: Composer Version
+    default: 'gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip'
+  composer-version:
+    description: 'Composer Version'
     required: false
-    default: v2
-  path_to_code:
-    description: Relative path to the code.
+    default: 'v2'
+  path-to-code:
+    description: 'Relative path to the code.'
     required: false
-    default: /
-  phpstan-level:
-    description: PHPStan level to check.
-    required: false
-    default: 1
+    default: '/'
   phpstan-configuration:
-    description: Relative path to configuration file.
+    description: 'Relative path to configuration file.'
     required: false
-    default: ./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
+    default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon'
+  phpstan-level:
+    description: 'PHPStan level to check.'
+    required: false
+    default: '1'
   setup-di-compile:
-    description: Run "bin/magento setup:di:compile" command.
+    description: 'Run "bin/magento setup:di:compile" command.'
     required: false
-    default: true
+    default: 'true'
   skip-cache:
-    description: Skip composer cache.
+    description: 'Skip composer cache.'
     required: false
+    default: 'false'
 runs:
-  using: composite
+  using: 'composite'
   steps:
     - uses: actions/checkout@v3
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
         coverage: none
-        php-version: ${{ inputs.php_version }}
-        tools: composer:${{ inputs.composer_version }}
-        extensions: ${{ inputs.php_extensions }}
+        php-version: ${{ inputs.php-version }}
+        tools: composer:${{ inputs.composer-version }}
+        extensions: ${{ inputs.php-extensions }}
     - name: Get Composer global directories
       id: composer
       run: |
@@ -81,7 +82,7 @@ runs:
       shell: bash
     - name: Run PHPStan analysis
       run: >
-        ./vendor/bin/phpstan analyse ${{ github.workspace }}${{ inputs.path_to_code }}
+        ./vendor/bin/phpstan analyse ${{ github.workspace }}${{ inputs.path-to-code }}
         --level ${{ inputs.phpstan-level }}
         --error-format github
         --configuration ${{ inputs.phpstan-configuration }}
