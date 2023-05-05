@@ -1,14 +1,77 @@
 name: 'Magento 2 Mess Detector'
 author: '121eCommerce LLC'
-description: 'Performs PHP static code analysis with the Magento 2 Mess Detector ruleset'
-inputs:
-  path_to_code:
-    description: 'Relative path to the code.'
-    required: false
-    default: ''
-runs:
-  using: 'docker'
-  image: 'docker://dmitryfurs/github-action-magento-mess-detector:1.0.0'
+description: 'Performs PHP static code analysis with the Magento 2 Mess Detector ruleset.'
 branding:
   icon: 'code'
   color: 'green'
+inputs:
+  php-version:
+    description: 'PHP Version'
+    required: false
+    default: '8.2'
+  php-extensions:
+    description: 'PHP Extensions'
+    required: false
+    default: 'gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip'
+  composer-version:
+    description: 'Composer Version'
+    required: false
+    default: 'v2'
+  phpmd-version:
+    description: 'PHP Mess Detector Composer Version.'
+    required: false
+    default: '*'
+  path-to-code:
+    description: 'Relative path to the code.'
+    required: false
+    default: '/'
+  phpmd-ruleset:
+    description: 'Relative path to ruleset file.'
+    required: false
+    default: ''
+  skip-cache:
+    description: 'Skip composer cache.'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+    - name: Setup PHP Action
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: none
+        php-version: ${{ inputs.php-version }}
+        tools: composer:${{ inputs.composer-version }}
+        extensions: ${{ inputs.php-extensions }}
+    - name: Get Composer global directories
+      id: composer
+      run: |
+        echo "dir-cache=$(composer global config cache-files-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "dir-bin=$(composer global config bin-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "dir-vendor=$(composer global config vendor-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Restore Composer Cache
+      if: ${{ !inputs.skip-cache }}
+      id: cache
+      uses: actions/cache/restore@v3
+      with:
+        path: ${{ steps.composer.outputs.dir-cache }}
+        key: ${{ runner.os }};phpmd=${{ inputs.phpmd-version }};
+    - name: Require PHPMD
+      run: composer global require phpmd/phpmd:${{ inputs.phpmd-version }}
+      shell: bash
+    - name: Save Composer Cache
+      if: ${{ steps.cache.outputs.cache-hit != 'true' && !inputs.skip-cache }}
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ steps.composer.outputs.dir-cache }}
+        key: ${{ runner.os }};phpmd=${{ inputs.phpmd-version }};
+    - name: Run specific ruleset
+      if:  ${{ inputs.phpmd-ruleset }}
+      run: ${{ steps.composer.outputs.dir-bin }}/phpmd ${{ github.workspace }}${{ inputs.path-to-code }} github ${{ github.workspace }}${{ inputs.phpmd-ruleset }} --suffixes php,phtml
+      shell: bash
+    - name: Run default ruleset
+      if:  ${{ !inputs.phpmd-ruleset }}
+      run: ${{ steps.composer.outputs.dir-bin }}/phpmd ${{ github.workspace }}${{ inputs.path-to-code }} github ${{ github.action_path }}/ruleset.xml --suffixes php,phtml
+      shell: bash

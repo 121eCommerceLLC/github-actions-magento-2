@@ -1,22 +1,90 @@
 name: 'Magento 2 PHPStan'
 author: '121eCommerce LLC'
-description: 'Performs php static code analysis with the Magento 2 PHPStan ruleset.'
-inputs:
-  path_to_code:
-    description: 'Relative path to the code. (Default: /)'
-    required: false
-    default: ''
-  level:
-    description: 'PHPStan level to check. (Default: 1)'
-    required: false
-    default: '1'
-  setup_di_compile:
-    description: 'Run "bin/magento setup:di:compile" command. (Default: 1)'
-    required: false
-    default: '1'
-runs:
-  using: 'docker'
-  image: 'docker://dmitryfurs/github-action-magento-phpstan:1.0.0'
+description: 'Performs php static code analysis with the Magento 2 PHPStan configuration.'
 branding:
   icon: 'code'
-  color: 'purple'
+  color: 'green'
+inputs:
+  php-version:
+    description: 'PHP Version'
+    required: false
+    default: '8.2'
+  php-extensions:
+    description: 'PHP Extensions'
+    required: false
+    default: 'gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip'
+  composer-version:
+    description: 'Composer Version'
+    required: false
+    default: 'v2'
+  path-to-code:
+    description: 'Relative path to the code.'
+    required: false
+    default: '/'
+  phpstan-configuration:
+    description: 'Relative path to configuration file.'
+    required: false
+    default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon'
+  phpstan-level:
+    description: 'PHPStan level to check.'
+    required: false
+    default: '1'
+  setup-di-compile:
+    description: 'Run "bin/magento setup:di:compile" command.'
+    required: false
+    default: 'true'
+  skip-cache:
+    description: 'Skip composer cache.'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+    - name: Setup PHP Action
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: none
+        php-version: ${{ inputs.php-version }}
+        tools: composer:${{ inputs.composer-version }}
+        extensions: ${{ inputs.php-extensions }}
+    - name: Get Composer global directories
+      id: composer
+      run: |
+        echo "dir-cache=$(composer global config cache-files-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "dir-bin=$(composer global config bin-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "dir-vendor=$(composer global config vendor-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Restore Composer Cache
+      if: ${{ !inputs.skip-cache }}
+      id: cache
+      uses: actions/cache/restore@v3
+      with:
+        path: ${{ steps.composer.outputs.dir-cache }}
+        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+    - name: Run "composer install"
+      run: |
+        composer require --dev phpstan/phpstan bitexpert/phpstan-magento phpstan/extension-installer --no-install --no-interaction
+        composer config --no-plugins allow-plugins.phpstan/extension-installer true
+        composer install --prefer-dist --no-progress
+      shell: bash
+    - name: Save Composer Cache
+      if: ${{ steps.cache.outputs.cache-hit != 'true' && !inputs.skip-cache }}
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ steps.composer.outputs.dir-cache }}
+        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+    - name: Run "bin/magento setup:di:compile"
+      if: ${{ inputs.setup-di-compile == 'true' }}
+      run: |
+        ./bin/magento setup:di:compile
+        composer dump-autoload -o --apcu
+      shell: bash
+    - name: Run PHPStan analysis
+      run: >
+        ./vendor/bin/phpstan analyse ${{ github.workspace }}${{ inputs.path-to-code }}
+        --level ${{ inputs.phpstan-level }}
+        --error-format github
+        --configuration ${{ inputs.phpstan-configuration }}
+        --no-progress
+      shell: bash
