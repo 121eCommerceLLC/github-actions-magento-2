@@ -46,6 +46,7 @@ runs:
         echo "dir-cache=$(composer global config cache-files-dir --absolute --quiet)" >> $GITHUB_OUTPUT
         echo "dir-bin=$(composer global config bin-dir --absolute --quiet)" >> $GITHUB_OUTPUT
         echo "dir-vendor=$(composer global config vendor-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "composer-lock-hash=${{ hashFiles('**/composer.lock') }}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore Composer Cache
       if: ${{ inputs.skip-cache != 'true' }}
@@ -53,7 +54,7 @@ runs:
       uses: actions/cache/restore@v3
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
-        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+        key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
     - name: Run "composer install"
       run: composer install --prefer-dist --no-progress
       shell: bash
@@ -62,7 +63,7 @@ runs:
       uses: actions/cache/save@v3
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
-        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+        key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
     - name: Run PHPMD analysis
       run: ./vendor/bin/phpmd ${{ github.workspace }}${{ inputs.path-to-code }} github ${{ inputs.phpmd-ruleset }} --suffixes php,phtml
       shell: bash
