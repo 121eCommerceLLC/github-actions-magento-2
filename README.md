@@ -56,47 +56,47 @@ jobs:
 - #### `magento-coding-standard-version`
 
   Default: `*` latest stable version.
-  <br /><br />
+  <br />
   
   The argument is used to provide an opportunity to specify a custom version of the [Magento Coding Standard](https://github.com/magento/magento-coding-standard).
   By default, the most up-to-date version will be installed.
-  <br /><br />
+  <br />
   
   This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the standard must be used for it,
   since new versions may add new sniffers that are incompatible with outdated versions of Magento.
-  <br /><br />
+  <br />
   
   A list of available versions can be found on the [releases page](https://github.com/magento/magento-coding-standard/releases) of the standard.
-  <br /><br />
+  <br />
 
   Example: `magento-coding-standard-version: v31`
 
 - #### `phpcs-extensions`
 
   Default: `php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP`
-  <br /><br />
+  <br />
   
   The argument is used to provide an opportunity to specify a custom list of extensions for the `--extensions` argument for the `phpcs` [tool](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#specifying-valid-file-extensions).
-  <br /><br />
+  <br />
   
   By default, the list of extensions has already been prepared according to the [Magento Coding Standard](https://github.com/magento/magento-coding-standard/blob/v31/Magento2/ruleset.xml#L6).
-  <br /><br />
+  <br />
   
   Example: `phpcs-extensions: php,phtml,graphqls/GraphQL,less/CSS,html/PHP,xml,js/PHP`
 
 - #### `phpcs-ruleset`
 
   Default: `There is no default value, the basic ruleset will be used.`
-  <br /><br />
+  <br />
   
   The argument is used to provide an opportunity to specify a custom ruleset.
   By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used,
   with the exception of some annoying, but not mandatory rules.
-  <br /><br />
+  <br />
   
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file.
   Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
-  <br /><br />
+  <br />
   
   Example: `phpcs-ruleset: /path/to/your/ruleset.xml`
 
@@ -153,33 +153,33 @@ jobs:
 - #### `phpmd-version`
 
   Default: `*` latest stable version.
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom version of the [PHP Mess Detector](https://github.com/phpmd/phpmd).
   By default, the most up-to-date version will be installed.
-  <br /><br />
+  <br />
 
   This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the detector must be used for it,
   since new versions may add new rules that are incompatible with outdated versions of Magento.
-  <br /><br />
+  <br />
 
   A list of available versions can be found on the [releases page](https://github.com/phpmd/phpmd/releases) of the tool.
-  <br /><br />
+  <br />
 
   Example: `phpmd-version: 2.13.0`
 
 - #### `phpmd-ruleset`
 
   Default: `There is no default value, the basic ruleset will be used.`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom ruleset.
   By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
-  <br /><br />
+  <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file.
   Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
-  <br /><br />
+  <br />
 
   Example: `phpmd-ruleset: /path/to/your/ruleset.xml`
 
@@ -236,15 +236,15 @@ jobs:
 - #### `phpmd-ruleset`
 
   Default: `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom ruleset.
   By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
-  <br /><br />
+  <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file.
   Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
-  <br /><br />
+  <br />
 
   Example: `phpmd-ruleset: /path/to/your/ruleset.xml`
 
@@ -330,47 +330,47 @@ jobs:
 - #### `php-compatibility-version`
 
   Default: `10.x-dev`.
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom version of the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility).
   By default, the version `10.x-dev` is used, since it supports the current versions of PHP8+, but it has not been released yet.
-  <br /><br />
+  <br />
 
   This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the tool must be used for it,
   since new versions may add new rules that are incompatible with outdated versions of Magento.
-  <br /><br />
+  <br />
 
   A list of available versions can be found on the [releases page](https://github.com/PHPCompatibility/PHPCompatibility/releases) of the tool.
-  <br /><br />
+  <br />
 
   Example: `php-compatibility-version: 9.3.5`
 
 - #### `php-compatibility-ruleset`
 
   Default: `There is no default value, the basic ruleset will be used.`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom ruleset.
   By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used,
   with the exception of some annoying, but not mandatory rules.
-  <br /><br />
+  <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file.
   Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
-  <br /><br />
+  <br />
 
   Example: `php-compatibility-ruleset: /path/to/your/ruleset.xml`
 
 - #### `php-compatibility-test-versions`
 
   Default: `8.2-`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom test versions range.
-  <br /><br />
+  <br />
 
   To get the most out of the PHPCompatibility standard, you should [specify](https://github.com/PHPCompatibility/PHPCompatibility#sniffing-your-code-for-compatibility-with-specific-php-versions) a `php-compatibility-test-versions` to check against. That will enable the checks for both deprecated/removed PHP features as well as the detection of code using new PHP features.
-  <br /><br />
+  <br />
 
   Examples:
   - You can run the checks for just one specific PHP version by adding `php-compatibility-test-versions: 8.2` to step arguments.
@@ -431,28 +431,28 @@ jobs:
 - #### `phpstan-configuration`
 
   Default: `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom configuration.
   By default, a [basic configuration](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon) is used.
-  <br /><br />
+  <br />
 
   In order to use your own configuration, you need to create your own configuration file according to the [instructions](https://phpstan.org/config-reference) and add it to the repository file.
   Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
-  <br /><br />
+  <br />
 
   Example: `phpstan-configuration: /path/to/your/configuration.neon`
 
 - #### `phpstan-level`
 
   Default: `1`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom check level.
-  <br /><br />
+  <br />
 
   If you want to use PHPStan but your codebase isn’t up to speed with strong typing and PHPStan’s strict checks, you can currently choose from 10 [levels](https://phpstan.org/user-guide/rule-levels) (`0` is the loosest and `9` is the strictest).
-  <br /><br />
+  <br />
 
   You can also use `max` as an alias for the highest level. This will ensure that you will always use the highest level when upgrading to new versions of PHPStan.
   > Please note that this can create a significant obstacle when upgrading to a newer version because you might have to fix a lot of code to bring the number of errors down to zero.
@@ -462,14 +462,14 @@ jobs:
 - #### `setup-di-compile`
 
   Default: `true`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to disable dependency compilation during check.
   Since part of the code is generated automatically in magento and this code is not in the repository, false positive errors may appear during static analysis due to the fact that some auto-generated classes are missing.
-  <br /><br />
+  <br />
 
   To disable dependency compilation, pass `false` value .
-  <br /><br />
+  <br />
 
   Example: `setup-di-compile: false`
 
@@ -519,13 +519,13 @@ jobs:
 - #### `file-extensions`
 
   Default: `php phtml html`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom list of the file extensions.
-  <br /><br />
+  <br />
 
   To add an additional file type for checking, you need to add it to the `file-extensions` parameter. For example, if we need to add `.js` extension, then add ` js` to the existing file types separated by space.
-  <br /><br />
+  <br />
 
   Example: `file-extensions: php phtml html js`
 
@@ -569,13 +569,13 @@ jobs:
 - #### `unnecessary-file-extensions`
 
   Default: `7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom list of the unnecessary file extensions.
-  <br /><br />
+  <br />
 
   To add an additional file type for checking, you need to add it to the `unnecessary-file-extensions` parameter. For example, if we need to add `.secret` extension, then add ` secret` to the existing file types separated by space.
-  <br /><br />
+  <br />
 
   Example: `unnecessary-file-extensions: 7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store secret`
 
@@ -588,77 +588,77 @@ The following arguments are common to many of the actions described above.
 - #### `php-version`
 
   Default: `8.2`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom PHP version.
-  <br /><br />
+  <br />
 
   To configure PHP, a third-party action [shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action) is used.
-  <br /><br />
+  <br />
 
   In order to specify the desired version, you need to select the supported version from the [list](https://github.com/marketplace/actions/setup-php-action#tada-php-support).
   Supported versions are from PHP 5.6 to PHP 8.3.
-  <br /><br />
+  <br />
 
   Example: `php-version: 7.4`
 
 - #### `php-extensions`
 
   Default: `8.2`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom PHP extension list. At the moment, the list of required extensions for Magento is specified.
-  <br /><br />
+  <br />
 
   This argument has the possibility of flexible configuration, you can find out about all the possibilities in the [documentation](https://github.com/marketplace/actions/setup-php-action#heavy_plus_sign-php-extension-support).
-  <br /><br />
+  <br />
 
   To add an additional extension, you need to add it to the `php-extensions` parameter. For example, if we need to add `swoole` extension, then add `, swoole` to the existing file types separated by comma.
-  <br /><br />
+  <br />
 
   Example: `php-extensions: gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip, swoole`
 
 - #### `composer-version`
 
   Default: `v2`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom Composer Version.
-  <br /><br />
+  <br />
   
   You can set up the required `composer` version by specifying the major version `v1` or `v2`, or the version in `major.minor` or `semver` format. Additionally, for composer `snapshot` and `preview` can also be specified to set up the respective releases.
-  <br /><br />
+  <br />
 
   Example: `composer-version: 1.10.26`
 
 - #### `path-to-code`
 
   Default: `/`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to specify a custom path to code.
-  <br /><br />
+  <br />
 
   In our examples, almost all actions are run for the `/app/code` and `/app/design` folders, but in some situations we may need to run a check on some subfolders, for example, third-party modules were installed in the `/app/code` folder, and now when running checks there are errors unrelated to our code because of which we cannot make a merge of pull request, as this may be restricted in the repository settings. For such cases, we can simply specify the folder `/app/code/Ecommerce121` and thereby circumvent this restriction.
-  <br /><br />
+  <br />
 
   The same situation is with the `/app/desing` folder, if we have several themes installed, but we only want to check a certain one, then we can simply specify the path to our theme.
-  <br /><br />
+  <br />
 
   Example: `path-to-code: /app/code/Ecommerce121`
 
 - #### `skip-cache`
 
   Default: `false`
-  <br /><br />
+  <br />
 
   The argument is used to provide an opportunity to disable caching of composer dependencies.
   During the execution of actions that use `composer` to install dependencies, an additional step of caching dependencies is performed in order to reduce the execution time of the action. 
   When launching actions, the cache is checked and previously loaded dependencies are used.
-  <br /><br />
+  <br />
 
   To disable caching, pass `true` value.
-  <br /><br />
+  <br />
 
   Example: `skip-cache: true`
 
