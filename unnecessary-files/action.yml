@@ -23,7 +23,7 @@ runs:
         cd ${{ github.workspace }}${{ inputs.path-to-code }}
         extensions=(${{ inputs.unnecessary-file-extensions }})
         for extension in ${extensions[@]}; do
-          for file in $(find $(pwd -P) -type f -name '*.'${extension}); do
+          for file in $(find $(pwd -P) -type f -name '*.'${extension} -not -path '*/dev/*'); do
             found=true
             echo "::error file=$file::Unnecessary files in the server should be removed to reduce risk of providing information to an attacker, affecting the performance of the site and reduce vulnerabilities."
           done
