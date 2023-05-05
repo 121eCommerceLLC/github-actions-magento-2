@@ -42,14 +42,14 @@ jobs:
 
 | Argument                                                                | Default Value                                                                                                       |
 |:------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| [`php-version` ➥](#php-version)                                         | `8.2`                                                                                                               |
-| [`php-extensions` ➥](#php-extensions)                                   | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
-| [`composer-version` ➥](#composer-version)                               | `v2` - latest stable Composer 2 version.                                                                            |
-| [`magento-coding-standard-version` ➥](#magento-coding-standard-version) | `*` - latest stable version.                                                                                        |
-| [`path-to-code` ➥](#path-to-code)                                       | `/`                                                                                                                 |
-| [`phpcs-extensions` ➥](#phpcs-extensions)                               | `php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP`                                                                    |
-| [`phpcs-ruleset` ➥](#phpcs-ruleset)                                     | There is no default value, the basic ruleset will be used.                                                          |
-| [`skip-cache` ➥](#skip-cache)                                           | `false`                                                                                                             |
+| [`php-version`](#php-version)                                         | `8.2`                                                                                                               |
+| [`php-extensions`](#php-extensions)                                   | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
+| [`composer-version`](#composer-version)                               | `v2` - latest stable Composer 2 version.                                                                            |
+| [`magento-coding-standard-version`](#magento-coding-standard-version) | `*` - latest stable version.                                                                                        |
+| [`path-to-code`](#path-to-code)                                       | `/`                                                                                                                 |
+| [`phpcs-extensions`](#phpcs-extensions)                               | `php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP`                                                                    |
+| [`phpcs-ruleset`](#phpcs-ruleset)                                     | There is no default value, the basic ruleset will be used.                                                          |
+| [`skip-cache`](#skip-cache)                                           | `false`                                                                                                             |
 
 #### Specific Action Arguments
 
@@ -58,12 +58,10 @@ jobs:
   Default: `*` latest stable version.
   <br />
   
-  The argument is used to provide an opportunity to specify a custom version of the [Magento Coding Standard](https://github.com/magento/magento-coding-standard).
-  By default, the most up-to-date version will be installed.
+  The argument is used to provide an opportunity to specify a custom version of the [Magento Coding Standard](https://github.com/magento/magento-coding-standard). By default, the most up-to-date version will be installed.
   <br />
   
-  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the standard must be used for it,
-  since new versions may add new sniffers that are incompatible with outdated versions of Magento.
+  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the standard must be used for it, since new versions may add new sniffers that are incompatible with outdated versions of Magento.
   <br />
   
   A list of available versions can be found on the [releases page](https://github.com/magento/magento-coding-standard/releases) of the standard.
@@ -89,13 +87,10 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
   
-  The argument is used to provide an opportunity to specify a custom ruleset.
-  By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used,
-  with the exception of some annoying, but not mandatory rules.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used, with the exception of some annoying, but not mandatory rules.
   <br />
   
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file.
-  Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
   
   Example: `phpcs-ruleset: /path/to/your/ruleset.xml`
@@ -140,13 +135,13 @@ jobs:
 
 | Argument                                  | Default Value                                                                                                       |
 |:------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| [`php-version` ➥](#php-version)           | `8.2`                                                                                                               |
-| [`php-extensions` ➥](#php-extensions)     | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
-| [`composer-version` ➥](#composer-version) | `v2` - latest stable Composer 2                                                                                     |
-| [`phpmd-version` ➥](#phpmd-version)       | `*` - latest stable version                                                                                         |
-| [`path-to-code` ➥](#path-to-code)         | `/`                                                                                                                 |
-| [`phpmd-ruleset` ➥](#phpmd-ruleset)       | There is no default value, the basic ruleset will be used.                                                          |
-| [`skip-cache` ➥](#skip-cache)             | `false`                                                                                                             |
+| [`php-version`](#php-version)           | `8.2`                                                                                                               |
+| [`php-extensions`](#php-extensions)     | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
+| [`composer-version`](#composer-version) | `v2` - latest stable Composer 2                                                                                     |
+| [`phpmd-version`](#phpmd-version)       | `*` - latest stable version                                                                                         |
+| [`path-to-code`](#path-to-code)         | `/`                                                                                                                 |
+| [`phpmd-ruleset`](#phpmd-ruleset)       | There is no default value, the basic ruleset will be used.                                                          |
+| [`skip-cache`](#skip-cache)             | `false`                                                                                                             |
 
 #### Specific Action Arguments
 
@@ -155,12 +150,10 @@ jobs:
   Default: `*` latest stable version.
   <br />
 
-  The argument is used to provide an opportunity to specify a custom version of the [PHP Mess Detector](https://github.com/phpmd/phpmd).
-  By default, the most up-to-date version will be installed.
+  The argument is used to provide an opportunity to specify a custom version of the [PHP Mess Detector](https://github.com/phpmd/phpmd). By default, the most up-to-date version will be installed.
   <br />
 
-  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the detector must be used for it,
-  since new versions may add new rules that are incompatible with outdated versions of Magento.
+  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the detector must be used for it, since new versions may add new rules that are incompatible with outdated versions of Magento.
   <br />
 
   A list of available versions can be found on the [releases page](https://github.com/phpmd/phpmd/releases) of the tool.
@@ -173,12 +166,10 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset.
-  By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
   <br />
 
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file.
-  Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
 
   Example: `phpmd-ruleset: /path/to/your/ruleset.xml`
@@ -222,12 +213,12 @@ jobs:
 
 | Argument                                  | Default Value                                                                                                       |
 |:------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| [`php-version` ➥](#php-version)           | `8.2`                                                                                                               |
-| [`php-extensions` ➥](#php-extensions)     | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
-| [`composer-version` ➥](#composer-version) | `v2` - latest stable Composer 2                                                                                     |
-| [`path-to-code` ➥](#path-to-code)         | `/`                                                                                                                 |
-| [`phpmd-ruleset` ➥](#phpmd-ruleset-1)     | `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml`                                            |
-| [`skip-cache` ➥](#skip-cache)             | `false`                                                                                                             |
+| [`php-version`](#php-version)           | `8.2`                                                                                                               |
+| [`php-extensions`](#php-extensions)     | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
+| [`composer-version`](#composer-version) | `v2` - latest stable Composer 2                                                                                     |
+| [`path-to-code`](#path-to-code)         | `/`                                                                                                                 |
+| [`phpmd-ruleset`](#phpmd-ruleset-1)     | `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml`                                            |
+| [`skip-cache`](#skip-cache)             | `false`                                                                                                             |
 
 > `phpmd-version` argument is missing, since the version from the `composer.lock` file in the project will be installed.
 
@@ -238,12 +229,10 @@ jobs:
   Default: `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset.
-  By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
   <br />
 
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file.
-  Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
 
   Example: `phpmd-ruleset: /path/to/your/ruleset.xml`
@@ -316,14 +305,14 @@ jobs:
 
 | Argument                                                                | Default Value                                                                                                       |
 |:------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| [`php-version` ➥](#php-version)                                         | `8.2`                                                                                                               |
-| [`php-extensions` ➥](#php-extensions)                                   | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
-| [`composer-version` ➥](#composer-version)                               | `v2` - latest stable Composer 2                                                                                     |
-| [`php-compatibility-version` ➥](#php-compatibility-version)             | `10.x-dev`                                                                                                          |
-| [`path-to-code` ➥](#path-to-code)                                       | `/`                                                                                                                 |
-| [`php-compatibility-ruleset` ➥](#php-compatibility-ruleset)             | There is no default value, the basic ruleset will be used.                                                          |
-| [`php-compatibility-test-versions` ➥](#php-compatibility-test-versions) | `8.2-`                                                                                                              |
-| [`skip-cache` ➥](#skip-cache)                                           | `false`                                                                                                             |
+| [`php-version`](#php-version)                                         | `8.2`                                                                                                               |
+| [`php-extensions`](#php-extensions)                                   | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
+| [`composer-version`](#composer-version)                               | `v2` - latest stable Composer 2                                                                                     |
+| [`php-compatibility-version`](#php-compatibility-version)             | `10.x-dev`                                                                                                          |
+| [`path-to-code`](#path-to-code)                                       | `/`                                                                                                                 |
+| [`php-compatibility-ruleset`](#php-compatibility-ruleset)             | There is no default value, the basic ruleset will be used.                                                          |
+| [`php-compatibility-test-versions`](#php-compatibility-test-versions) | `8.2-`                                                                                                              |
+| [`skip-cache`](#skip-cache)                                           | `false`                                                                                                             |
 
 #### Specific Action Arguments
 
@@ -332,12 +321,10 @@ jobs:
   Default: `10.x-dev`.
   <br />
 
-  The argument is used to provide an opportunity to specify a custom version of the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility).
-  By default, the version `10.x-dev` is used, since it supports the current versions of PHP8+, but it has not been released yet.
+  The argument is used to provide an opportunity to specify a custom version of the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility). By default, the version `10.x-dev` is used, since it supports the current versions of PHP8+, but it has not been released yet.
   <br />
 
-  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the tool must be used for it,
-  since new versions may add new rules that are incompatible with outdated versions of Magento.
+  This may be necessary in cases where an outdated version of Magento is used, and an outdated version of the tool must be used for it, since new versions may add new rules that are incompatible with outdated versions of Magento.
   <br />
 
   A list of available versions can be found on the [releases page](https://github.com/PHPCompatibility/PHPCompatibility/releases) of the tool.
@@ -350,13 +337,10 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset.
-  By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used,
-  with the exception of some annoying, but not mandatory rules.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used, with the exception of some annoying, but not mandatory rules.
   <br />
 
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file.
-  Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
 
   Example: `php-compatibility-ruleset: /path/to/your/ruleset.xml`
@@ -417,14 +401,14 @@ jobs:
 
 | Argument                                            | Default Value                                                                                                       |
 |:----------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| [`php-version` ➥](#php-version)                     | `8.2`                                                                                                               |
-| [`php-extensions` ➥](#php-extensions)               | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
-| [`composer-version` ➥](#composer-version)           | `v2` - latest stable Composer 2                                                                                     |
-| [`path-to-code` ➥](#path-to-code)                   | `/`                                                                                                                 |
-| [`phpstan-configuration` ➥](#phpstan-configuration) | `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon`                                         |
-| [`phpstan-level` ➥](#phpstan-level)                 | `1`                                                                                                                 |
-| [`setup-di-compile` ➥](#setup-di-compile)           | `true`                                                                                                              |
-| [`skip-cache` ➥](#skip-cache)                       | `false`                                                                                                             |
+| [`php-version`](#php-version)                     | `8.2`                                                                                                               |
+| [`php-extensions`](#php-extensions)               | `gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip` |
+| [`composer-version`](#composer-version)           | `v2` - latest stable Composer 2                                                                                     |
+| [`path-to-code`](#path-to-code)                   | `/`                                                                                                                 |
+| [`phpstan-configuration`](#phpstan-configuration) | `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon`                                         |
+| [`phpstan-level`](#phpstan-level)                 | `1`                                                                                                                 |
+| [`setup-di-compile`](#setup-di-compile)           | `true`                                                                                                              |
+| [`skip-cache`](#skip-cache)                       | `false`                                                                                                             |
 
 #### `Specific Action Arguments`
 
@@ -433,12 +417,10 @@ jobs:
   Default: `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom configuration.
-  By default, a [basic configuration](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon) is used.
+  The argument is used to provide an opportunity to specify a custom configuration. By default, a [basic configuration](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon) is used.
   <br />
 
-  In order to use your own configuration, you need to create your own configuration file according to the [instructions](https://phpstan.org/config-reference) and add it to the repository file.
-  Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own configuration, you need to create your own configuration file according to the [instructions](https://phpstan.org/config-reference) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
 
   Example: `phpstan-configuration: /path/to/your/configuration.neon`
@@ -464,8 +446,7 @@ jobs:
   Default: `true`
   <br />
 
-  The argument is used to provide an opportunity to disable dependency compilation during check.
-  Since part of the code is generated automatically in magento and this code is not in the repository, false positive errors may appear during static analysis due to the fact that some auto-generated classes are missing.
+  The argument is used to provide an opportunity to disable dependency compilation during check. Since part of the code is generated automatically in magento and this code is not in the repository, false positive errors may appear during static analysis due to the fact that some auto-generated classes are missing.
   <br />
 
   To disable dependency compilation, pass `false` value .
@@ -511,8 +492,8 @@ jobs:
 
 | Argument                                | Default Value    |
 |:----------------------------------------|:-----------------|
-| [`path-to-code` ➥](#path-to-code)       | `/`              |
-| [`file-extensions` ➥](#file-extensions) | `php phtml html` |
+| [`path-to-code`](#path-to-code)       | `/`              |
+| [`file-extensions`](#file-extensions) | `php phtml html` |
 
 #### Specific Action Arguments
 
@@ -524,7 +505,7 @@ jobs:
   The argument is used to provide an opportunity to specify a custom list of the file extensions.
   <br />
 
-  To add an additional file type for checking, you need to add it to the `file-extensions` parameter. For example, if we need to add `.js` extension, then add ` js` to the existing file types separated by space.
+  To add a file type for checking, you need to add it to the `file-extensions` parameter. For example, if we need to add `.js` extension, then add ` js` to the existing file types separated by space.
   <br />
 
   Example: `file-extensions: php phtml html js`
@@ -561,8 +542,8 @@ jobs:
 
 | Argument                                                        | Default Value                                                                                                        |
 |:----------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------|
-| [`path-to-code` ➥](#path-to-code)                               | `/`                                                                                                                  |
-| [`unnecessary-file-extensions` ➥](#unnecessary-file-extensions) | `7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store` |
+| [`path-to-code`](#path-to-code)                               | `/`                                                                                                                  |
+| [`unnecessary-file-extensions`](#unnecessary-file-extensions) | `7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store` |
 
 #### Specific Action Arguments
 
@@ -574,7 +555,7 @@ jobs:
   The argument is used to provide an opportunity to specify a custom list of the unnecessary file extensions.
   <br />
 
-  To add an additional file type for checking, you need to add it to the `unnecessary-file-extensions` parameter. For example, if we need to add `.secret` extension, then add ` secret` to the existing file types separated by space.
+  To add a file type for checking, you need to add it to the `unnecessary-file-extensions` parameter. For example, if we need to add `.secret` extension, then add ` secret` to the existing file types separated by space.
   <br />
 
   Example: `unnecessary-file-extensions: 7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store secret`
@@ -593,11 +574,10 @@ The following arguments are common to many of the actions described above.
   The argument is used to provide an opportunity to specify a custom PHP version.
   <br />
 
-  To configure PHP, a third-party action [shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action) is used.
+  To configure PHP, a third party action [shivammathur/setup-php](https://github.com/marketplace/actions/setup-php-action) is used.
   <br />
 
-  In order to specify the desired version, you need to select the supported version from the [list](https://github.com/marketplace/actions/setup-php-action#tada-php-support).
-  Supported versions are from PHP 5.6 to PHP 8.3.
+  In order to specify the desired version, you need to select the supported version from the [list](https://github.com/marketplace/actions/setup-php-action#tada-php-support). Supported versions are from PHP 5.6 to PHP 8.3.
   <br />
 
   Example: `php-version: 7.4`
@@ -613,7 +593,7 @@ The following arguments are common to many of the actions described above.
   This argument has the possibility of flexible configuration, you can find out about all the possibilities in the [documentation](https://github.com/marketplace/actions/setup-php-action#heavy_plus_sign-php-extension-support).
   <br />
 
-  To add an additional extension, you need to add it to the `php-extensions` parameter. For example, if we need to add `swoole` extension, then add `, swoole` to the existing file types separated by comma.
+  To add an extension, you need to add it to the `php-extensions` parameter. For example, if we need to add `swoole` extension, then add `, swoole` to the existing file types separated by comma.
   <br />
 
   Example: `php-extensions: gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip, swoole`
@@ -652,9 +632,7 @@ The following arguments are common to many of the actions described above.
   Default: `false`
   <br />
 
-  The argument is used to provide an opportunity to disable caching of composer dependencies.
-  During the execution of actions that use `composer` to install dependencies, an additional step of caching dependencies is performed in order to reduce the execution time of the action. 
-  When launching actions, the cache is checked and previously loaded dependencies are used.
+  The argument is used to provide an opportunity to disable caching of composer dependencies. During the execution of actions that use `composer` to install dependencies, an additional step of caching dependencies is performed in order to reduce the execution time of the action. When launching actions, the cache is checked and previously loaded dependencies are used.
   <br />
 
   To disable caching, pass `true` value.
