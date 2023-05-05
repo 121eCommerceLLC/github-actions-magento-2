@@ -54,6 +54,7 @@ runs:
         echo "dir-cache=$(composer global config cache-files-dir --absolute --quiet)" >> $GITHUB_OUTPUT
         echo "dir-bin=$(composer global config bin-dir --absolute --quiet)" >> $GITHUB_OUTPUT
         echo "dir-vendor=$(composer global config vendor-dir --absolute --quiet)" >> $GITHUB_OUTPUT
+        echo "lock-hash=${{ hashFiles('**/composer.lock') }}" >> $GITHUB_OUTPUT
       shell: bash
     - name: Restore Composer Cache
       if: ${{ inputs.skip-cache != 'true' }}
@@ -61,7 +62,7 @@ runs:
       uses: actions/cache/restore@v3
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
-        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+        key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.lock-hash }};
     - name: Run "composer install"
       run: |
         composer require --dev phpstan/phpstan bitexpert/phpstan-magento phpstan/extension-installer --no-install --no-interaction
@@ -73,7 +74,7 @@ runs:
       uses: actions/cache/save@v3
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
-        key: ${{ runner.os }};composer.lock=${{ hashFiles('**/composer.lock') }};
+        key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.lock-hash }};
     - name: Run "bin/magento setup:di:compile"
       if: ${{ inputs.setup-di-compile == 'true' }}
       run: |
