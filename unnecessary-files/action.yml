@@ -13,6 +13,10 @@ inputs:
     description: 'File Extensions.'
     required: false
     default: '7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store'
+  excluded-paths:
+    description: 'Excluded Paths.'
+    required: false
+    default: 'dev lib'
 runs:
   using: 'composite'
   steps:
@@ -22,8 +26,18 @@ runs:
         found=false
         cd ${{ github.workspace }}${{ inputs.path-to-code }}
         extensions=(${{ inputs.unnecessary-file-extensions }})
+
+        #<collect excluded paths
+        inputExcludedPaths=(${{ inputs.excluded-paths }})
+        excludedPaths='';
+
+        for excludedPath in ${inputExcludedPaths[@]}; do
+          excludedPaths="${excludedPaths} ! -path */${excludedPath}/*"
+        done;
+        #>
+
         for extension in ${extensions[@]}; do
-          for file in $(find $(pwd -P) -type f -name '*.'${extension} -not -path '*/dev/*'); do
+          for file in $(find $(pwd -P) -type f -name '*.'${extension} ${excludedPaths}); do
             found=true
             echo "::error file=$file::Unnecessary files in the server should be removed to reduce risk of providing information to an attacker, affecting the performance of the site and reduce vulnerabilities."
           done
