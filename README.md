@@ -540,10 +540,11 @@ jobs:
 
 > Detailed information about common arguments is available in a [Common Arguments](#common-arguments) section.
 
-| Argument                                                        | Default Value                                                                                                        |
-|:----------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------|
+| Argument                                                      | Default Value                                                                                                        |
+|:--------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------|
 | [`path-to-code`](#path-to-code)                               | `/`                                                                                                                  |
 | [`unnecessary-file-extensions`](#unnecessary-file-extensions) | `7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store` |
+| [`excluded-paths`](#excluded-paths)                           | `dev lib`                                                                                                            |
 
 #### Specific Action Arguments
 
@@ -560,6 +561,12 @@ jobs:
 
   Example: `unnecessary-file-extensions: 7z asp back bak bz2 exe gz iso jar lz lz4 lzma lzo pass rar s7z shar sql sz tar tbz2 tgz tlz xz z zip zst DS_Store secret`
 
+- #### `excluded-paths`
+
+  The argument is used to provide an opportunity to specify a custom list of excluded paths.
+  <br />
+
+  Example: `excluded-paths: dev lib`
 ---
 
 ## Common Arguments
