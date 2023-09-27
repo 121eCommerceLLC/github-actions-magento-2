@@ -33,6 +33,10 @@ inputs:
     description: 'Skip composer cache.'
     required: false
     default: 'false'
+  runner-env:
+    description: 'Runner.'
+    required: false
+    default: ''
 runs:
   using: 'composite'
   steps:
@@ -44,6 +48,8 @@ runs:
         php-version: ${{ inputs.php-version }}
         tools: composer:${{ inputs.composer-version }}
         extensions: ${{ inputs.php-extensions }}
+      env:
+        runner: ${{ inputs.runner-env }}
     - name: Get Composer global directories
       id: composer
       run: |
