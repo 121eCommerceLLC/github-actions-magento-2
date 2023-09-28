@@ -66,8 +66,8 @@ runs:
       id: coding-standard
       run: |
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-        composer global require dealerdirect/phpcodesniffer-composer-installer:*
-        composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }}
+        composer require dealerdirect/phpcodesniffer-composer-installer:*
+        composer require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }}
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ${{ steps.composer.outputs.dir-vendor }}/magento/magento-coding-standard,${{ steps.composer.outputs.dir-vendor }}/phpcompatibility/php-compatibility,${{ github.action_path }}/Ecommerce121
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
       shell: bash
