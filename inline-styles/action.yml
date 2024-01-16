@@ -20,7 +20,7 @@ runs:
     - name: Detect Inline Styles
       run: |
         found=false
-        cd ${{ github.workspace }}${{ inputs.path-to-code }}
+        cd $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         extensions=(${{ inputs.file-extensions }})
         for extension in ${extensions[@]}; do
           for file in $(find $(pwd -P) -type f -name '*.'${extension}); do

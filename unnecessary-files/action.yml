@@ -24,7 +24,7 @@ runs:
     - name: Detect Unnecessary Files
       run: |
         found=false
-        cd ${{ github.workspace }}${{ inputs.path-to-code }}
+        cd $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         extensions=(${{ inputs.unnecessary-file-extensions }})
 
         #<collect excluded paths
