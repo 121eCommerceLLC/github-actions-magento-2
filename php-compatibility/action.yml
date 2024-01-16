@@ -82,9 +82,9 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=php,phtml
-        --standard=${{ github.workspace }}${{ inputs.ruleset }}
+        --standard=$GITHUB_WORKSPACE${{ inputs.ruleset }}
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        ${{ github.workspace }}${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.php-compatibility-ruleset }}
@@ -94,5 +94,5 @@ runs:
         --extensions=php,phtml
         --standard=${{ github.action_path }}/ruleset.xml
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        ${{ github.workspace }}${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
