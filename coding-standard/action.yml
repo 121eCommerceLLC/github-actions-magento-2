@@ -66,8 +66,8 @@ runs:
       id: coding-standard
       run: |
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-        composer require dealerdirect/phpcodesniffer-composer-installer:*
-        composer require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }}
+        composer global require dealerdirect/phpcodesniffer-composer-installer:*
+        composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }}
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ${{ steps.composer.outputs.dir-vendor }}/magento/magento-coding-standard,${{ steps.composer.outputs.dir-vendor }}/phpcompatibility/php-compatibility,${{ github.action_path }}/Ecommerce121
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
       shell: bash
@@ -86,8 +86,8 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
-        --standard=${{ github.workspace }}${{ inputs.phpcs-ruleset }}
-        ${{ github.workspace }}${{ inputs.path-to-code }}
+        --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpcs-ruleset }}
@@ -96,5 +96,5 @@ runs:
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
         --standard=${{ github.action_path }}/ruleset.xml
-        ${{ github.workspace }}${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
