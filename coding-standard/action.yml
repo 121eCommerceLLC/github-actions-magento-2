@@ -95,10 +95,9 @@ runs:
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpcs-ruleset }}
-      run: >
-        ${{ steps.composer.outputs.dir-bin }}/phpcs
-        --report=checkstyle
-        --extensions=${{ inputs.phpcs-extensions }}
-        --standard=${{ github.action_path }}/ruleset.xml
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+      run: |
+        echo ${{ steps.composer.outputs.dir-bin }}
+        echo ${{ inputs.phpcs-extensions }}
+        echo ${{ github.action_path }}
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=${{ github.action_path }}/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
