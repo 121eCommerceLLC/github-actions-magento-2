@@ -69,6 +69,7 @@ runs:
         composer require dealerdirect/phpcodesniffer-composer-installer:* --no-update
         composer require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
         composer update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
+        ${{ steps.composer.outputs.dir-vendor }}/bin/ece-patches apply
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ${{ steps.composer.outputs.dir-vendor }}/magento/magento-coding-standard,${{ steps.composer.outputs.dir-vendor }}/phpcompatibility/php-compatibility,${{ github.action_path }}/Ecommerce121
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
       shell: bash
