@@ -71,10 +71,10 @@ runs:
         composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
         composer update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard,../../phpcompatibility/php-compatibility,${{ github.action_path }}/Ecommerce121
-        ${{ steps.composer.outputs.dir-bin }}/phpcs -i
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-show
         pwd
+        cd ${{ github.action_path }}
+        ls -la
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
@@ -91,6 +91,7 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
+        --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
         $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
@@ -99,5 +100,6 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
+        --standard=${{ github.action_path }}/ruleset.xml
         $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
