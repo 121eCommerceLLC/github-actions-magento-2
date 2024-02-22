@@ -73,8 +73,6 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-show
         pwd
-        cd ${{ github.action_path }}
-        ls -la
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
