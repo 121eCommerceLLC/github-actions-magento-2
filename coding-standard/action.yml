@@ -8,7 +8,7 @@ inputs:
   php-version:
     description: 'PHP Version'
     required: false
-    default: '8.2'
+    default: '8.1'
   php-extensions:
     description: 'PHP Extensions'
     required: false
