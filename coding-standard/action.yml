@@ -74,10 +74,9 @@ runs:
         echo ${{ github.action_path }}
         echo $GITHUB_WORKSPACE
         echo $GITHUB_ACTION_PATH
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,${{ github.action_path }}/Ecommerce121
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/Ecommerce121
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-show
-        sleep 20000
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
