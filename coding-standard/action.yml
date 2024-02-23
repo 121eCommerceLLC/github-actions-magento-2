@@ -90,7 +90,7 @@ runs:
         echo ${{ steps.composer.outputs.dir-bin }}
         echo ${{ inputs.phpcs-extensions }}
         echo ${{ github.action_path }}
-        sleep 200
+        sleep 20000
         ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
