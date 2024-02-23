@@ -65,15 +65,11 @@ runs:
     - name: Require Magento Coding Standard
       id: coding-standard
       run: |
-        pwd
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
         composer global require dealerdirect/phpcodesniffer-composer-installer:* --no-update
         composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
         composer global update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility
-        ${{ steps.composer.outputs.dir-bin }}/phpcs -i
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-show
-        pwd
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,${{ github.action_path }}/Ecommerce121
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
@@ -86,11 +82,7 @@ runs:
       shell: bash
     - name: Run specific ruleset
       if:  ${{ inputs.phpcs-ruleset }}
-      run: |
-        echo ${{ steps.composer.outputs.dir-bin }}
-        echo ${{ inputs.phpcs-extensions }}
-        echo ${{ github.action_path }}
-        sleep 20000
+      run: >
         ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
@@ -98,3 +90,6 @@ runs:
       run: >
         ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=${{ github.action_path }}/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
+    - name: Clean up
+      run: |
+        composer global remove dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard
