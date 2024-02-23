@@ -69,7 +69,7 @@ runs:
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
         composer global require dealerdirect/phpcodesniffer-composer-installer:* --no-update
         composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
-        composer update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
+        composer global update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
         ([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility)
         ${{ steps.composer.outputs.dir-bin }}/phpcs -i
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-show
