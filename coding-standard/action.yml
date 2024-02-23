@@ -93,3 +93,4 @@ runs:
     - name: Clean up
       run: |
         composer global remove dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard
+      shell: bash
