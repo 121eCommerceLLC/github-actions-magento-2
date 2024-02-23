@@ -37,6 +37,10 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
+    - uses: webiny/action-post-run@3.1.0
+      id: clean-up
+      with:
+        run: composer global remove phpmd/phpmd
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
@@ -73,5 +77,5 @@ runs:
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpmd-ruleset }}
-      run: ${{ steps.composer.outputs.dir-bin }}/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }} github ${{ github.action_path }}/ruleset.xml --suffixes php,phtml
+      run: ${{ steps.composer.outputs.dir-bin }}/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }} github $GITHUB_ACTION_PATH/ruleset.xml --suffixes php,phtml
       shell: bash
