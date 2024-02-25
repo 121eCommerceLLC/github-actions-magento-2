@@ -65,7 +65,7 @@ runs:
     - name: Require PHPMD
       run: | 
         composer global require phpmd/phpmd:${{ inputs.phpmd-version }} --no-update
-        composer update phpmd/phpmd -W
+        composer global update phpmd/phpmd -W
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
