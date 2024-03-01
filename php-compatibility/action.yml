@@ -41,6 +41,10 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
+    - uses: webiny/action-post-run@3.1.0
+      id: clean-up
+      with:
+        run: composer global remove dealerdirect/phpcodesniffer-composer-installer phpcompatibility/php-compatibility
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
@@ -65,7 +69,9 @@ runs:
     - name: Require PHP Compatibility
       run: |
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-        composer global require phpcompatibility/php-compatibility:${{ inputs.php-compatibility-version }}
+        composer global require dealerdirect/phpcodesniffer-composer-installer:* --no-update
+        composer global require phpcompatibility/php-compatibility:${{ inputs.php-compatibility-version }} --no-update
+        composer global update dealerdirect/phpcodesniffer-composer-installer phpcompatibility/php-compatibility -W
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
@@ -92,7 +98,7 @@ runs:
         ${{ steps.composer.outputs.dir-bin }}/phpcs
         --report=checkstyle
         --extensions=php,phtml
-        --standard=${{ github.action_path }}/ruleset.xml
+        --standard=$GITHUB_ACTION_PATH/ruleset.xml
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
         $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash

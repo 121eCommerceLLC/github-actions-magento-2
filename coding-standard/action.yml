@@ -41,6 +41,10 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
+    - uses: webiny/action-post-run@3.1.0
+      id: clean-up
+      with:
+        run: composer global remove dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
@@ -66,10 +70,10 @@ runs:
       id: coding-standard
       run: |
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-        composer global require dealerdirect/phpcodesniffer-composer-installer:*
-        composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }}
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ${{ steps.composer.outputs.dir-vendor }}/magento/magento-coding-standard,${{ steps.composer.outputs.dir-vendor }}/phpcompatibility/php-compatibility,${{ github.action_path }}/Ecommerce121
-        ${{ steps.composer.outputs.dir-bin }}/phpcs -i
+        composer global require dealerdirect/phpcodesniffer-composer-installer:* --no-update
+        composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
+        composer global update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard - W
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/Ecommerce121
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
@@ -83,18 +87,10 @@ runs:
     - name: Run specific ruleset
       if:  ${{ inputs.phpcs-ruleset }}
       run: >
-        ${{ steps.composer.outputs.dir-bin }}/phpcs
-        --report=checkstyle
-        --extensions=${{ inputs.phpcs-extensions }}
-        --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpcs-ruleset }}
       run: >
-        ${{ steps.composer.outputs.dir-bin }}/phpcs
-        --report=checkstyle
-        --extensions=${{ inputs.phpcs-extensions }}
-        --standard=${{ github.action_path }}/ruleset.xml
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_ACTION_PATH/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash

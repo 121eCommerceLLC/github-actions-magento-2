@@ -29,10 +29,6 @@ inputs:
     description: 'PHPStan level to check.'
     required: false
     default: '1'
-  setup-di-compile:
-    description: 'Run "bin/magento setup:di:compile" command.'
-    required: false
-    default: 'true'
   skip-cache:
     description: 'Skip composer cache.'
     required: false
@@ -65,8 +61,6 @@ runs:
         key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
     - name: Run "composer install"
       run: |
-        composer require --dev phpstan/phpstan bitexpert/phpstan-magento phpstan/extension-installer --no-install --no-interaction
-        composer config --no-plugins allow-plugins.phpstan/extension-installer true
         composer install --prefer-dist --no-progress
       shell: bash
     - name: Save Composer Cache
@@ -75,12 +69,6 @@ runs:
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
         key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
-    - name: Run "bin/magento setup:di:compile"
-      if: ${{ inputs.setup-di-compile == 'true' }}
-      run: |
-        ./bin/magento setup:di:compile
-        composer dump-autoload -o --apcu
-      shell: bash
     - name: Run PHPStan analysis
       run: >
         ./vendor/bin/phpstan analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }}
