@@ -41,8 +41,8 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
-    - uses: webiny/action-post-run@3.1.0
-      id: clean-up
+    - name: Post Clean Up
+      uses: webiny/action-post-run@3.1.0
       with:
         run: composer global remove dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard
     - name: Setup PHP Action
@@ -87,10 +87,18 @@ runs:
     - name: Run specific ruleset
       if:  ${{ inputs.phpcs-ruleset }}
       run: >
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        ${{ steps.composer.outputs.dir-bin }}/phpcs
+        --report=checkstyle
+        --extensions=${{ inputs.phpcs-extensions }}
+        --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpcs-ruleset }}
       run: >
-        ${{ steps.composer.outputs.dir-bin }}/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_ACTION_PATH/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        ${{ steps.composer.outputs.dir-bin }}/phpcs
+        --report=checkstyle
+        --extensions=${{ inputs.phpcs-extensions }}
+        --standard=$GITHUB_ACTION_PATH/ruleset.xml
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
       shell: bash

@@ -41,8 +41,8 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v4
-    - uses: webiny/action-post-run@3.1.0
-      id: clean-up
+    - name: Post Clean Up
+      uses: webiny/action-post-run@3.1.0
       with:
         run: composer global remove dealerdirect/phpcodesniffer-composer-installer phpcompatibility/php-compatibility
     - name: Setup PHP Action
