@@ -72,7 +72,7 @@ runs:
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
         composer global require dealerdirect/phpcodesniffer-composer-installer:* --no-update
         composer global require magento/magento-coding-standard:${{ inputs.magento-coding-standard-version }} --no-update
-        composer global update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard - W
+        composer global update dealerdirect/phpcodesniffer-composer-installer magento/magento-coding-standard -W
         ${{ steps.composer.outputs.dir-bin }}/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/Ecommerce121
       shell: bash
     - name: Save Composer Cache
