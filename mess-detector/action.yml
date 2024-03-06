@@ -40,7 +40,7 @@ runs:
     - name: Post Clean Up
       uses: webiny/action-post-run@3.1.0
       with:
-        run: composer global remove phpmd/phpmd
+        run: composer global remove $(composer global show --name-only 2>/dev/null)
     - name: Setup PHP Action
       uses: shivammathur/setup-php@v2
       with:
@@ -63,7 +63,8 @@ runs:
         path: ${{ steps.composer.outputs.dir-cache }}
         key: ${{ runner.os }};phpmd=${{ inputs.phpmd-version }};
     - name: Require PHPMD
-      run: | 
+      run: |
+        composer global remove $(composer global show --name-only 2>/dev/null)
         composer global require phpmd/phpmd:${{ inputs.phpmd-version }} --no-update
         composer global update phpmd/phpmd -W
       shell: bash
