@@ -161,8 +161,10 @@ runs:
         steps=$(echo "${{ toJson(steps) }}" | jq -r 'keys[]')
         for step_id in $steps; do
           echo $step_id
-          echo "${{ steps[${step_id}].outcome }}"
-          if [[ "${{ steps[${step_id}].outcome }}" == "failure" ]]; then
+          # echo "${{ steps[${step_id}].outcome }}"
+          # if [[ "${{ steps[${step_id}].outcome }}" == "failure" ]]; then
+          if eval "[[ \"\${{ steps.${step_id}.outcome }}\" == \"failure\" ]]"; then
+          
             echo "At least one step failed"
           fi
         done
