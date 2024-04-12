@@ -82,6 +82,9 @@ runs:
     - name: Add problem matcher
       run: echo '::add-matcher::${{ github.action_path }}/coding-standard/problem-matcher.json'
       shell: bash
+    - name: Register Coding Standards
+      run: ./vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/coding-standard/Ecommerce121
+      shell: bash
     - name: Run coding standard specific ruleset
       if: ${{ inputs.phpcs-ruleset }}
       run: >
