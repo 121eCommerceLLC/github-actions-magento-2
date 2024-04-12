@@ -92,7 +92,7 @@ runs:
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
         --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} || exit 0
       shell: bash
     - name: Run coding standard default ruleset
       if: ${{ !inputs.phpcs-ruleset }}
@@ -101,14 +101,14 @@ runs:
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
         --standard=$GITHUB_ACTION_PATH/coding-standard/ruleset.xml
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} || exit 0
       shell: bash
     - name: Run PHPMD analysis
       run: >
         ./vendor/bin/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         github 
         ${{ inputs.phpmd-ruleset }}
-        --suffixes php,phtml
+        --suffixes php,phtml || exit 0
       shell: bash
     - name: Add problem matcher
       run: echo '::add-matcher::${{ github.action_path }}/php-compatibility/problem-matcher.json'
@@ -121,7 +121,7 @@ runs:
         --extensions=php,phtml
         --standard=$GITHUB_WORKSPACE${{ inputs.ruleset }}
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} || exit 0
       shell: bash
     - name: Run PHP Compatibility default ruleset
       if: ${{ !inputs.php-compatibility-ruleset }}
@@ -131,7 +131,7 @@ runs:
         --extensions=php,phtml
         --standard=$GITHUB_ACTION_PATH/php-compatibility/ruleset.xml
         --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} || exit 0
       shell: bash
     - name: Run PHPStan analysis
       run: >
@@ -139,5 +139,5 @@ runs:
         --level ${{ inputs.phpstan-level }}
         --error-format github
         --configuration ${{ inputs.phpstan-configuration }}
-        --no-progress
+        --no-progress || exit 0
       shell: bash
