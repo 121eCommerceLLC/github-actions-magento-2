@@ -1,0 +1,140 @@
+name: 'Magento 2 Checks'
+author: '121eCommerce LLC'
+description: 'Performs code analysis using Magento 2 rulesets.'
+branding:
+  icon: 'star'
+  color: 'gray-dark'
+inputs:
+  php-version:
+    description: 'PHP Version'
+    required: false
+    default: '8.3'
+  php-extensions:
+    description: 'PHP Extensions'
+    required: false
+    default: 'gd, bcmath, soap, pdo_mysql, ctype, curl, dom, hash, iconv, intl, mbstring, openssl, simplexml, xsl, sockets, zip'
+  composer-version:
+    description: 'Composer Version'
+    required: false
+    default: 'v2'
+  path-to-code:
+    description: 'Relative path to the code.'
+    required: false
+    default: '/'
+  phpcs-extensions:
+    description: 'PHPCS: List of file extensions to check.'
+    required: false
+    default: 'php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP'
+  phpcs-ruleset:
+    description: 'PHPCS: Relative path to ruleset file.'
+    required: false
+    default: ''
+  phpmd-ruleset:
+    description: 'PHPMD: Relative path to ruleset file.'
+    required: false
+    default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml'
+  php-compatibility-ruleset:
+    description: 'PHP Compatibility: Relative path to ruleset file.'
+    required: false
+    default: ''
+  php-compatibility-test-versions:
+    description: 'PHP Compatibility: PHP Compatibility testVersions.'
+    required: false
+    default: '8.3-'
+  phpstan-configuration:
+    description: 'PHPStan: Relative path to configuration file.'
+    required: false
+    default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon'
+  phpstan-level:
+    description: 'PHPStan: Level to check.'
+    required: false
+    default: '1'
+  setup-di-compile:
+    description: 'Run "bin/magento setup:di:compile" command.'
+    required: false
+    default: 'true'
+  skip-cache:
+    description: 'Skip composer cache.'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: none
+        php-version: ${{ inputs.php-version }}
+        tools: composer:${{ inputs.composer-version }}
+        extensions: ${{ inputs.php-extensions }}
+    - name: Run "composer install"
+      uses: ramsey/composer-install@v3
+      with:
+        composer-options: --prefer-dist --no-progress
+        ignore-cache: ${{ inputs.skip-cache }}
+    - name: Run "bin/magento setup:di:compile"
+      if: ${{ inputs.setup-di-compile == 'true' }}
+      run: |
+        ./bin/magento setup:di:compile
+        composer dump-autoload -o --apcu
+      shell: bash
+    - name: Add problem matcher
+      run: echo '::add-matcher::${{ github.action_path }}/coding-standard/problem-matcher.json'
+      shell: bash
+    - name: Run coding standard specific ruleset
+      if: ${{ inputs.phpcs-ruleset }}
+      run: >
+        ./vendor/bin/phpcs
+        --report=checkstyle
+        --extensions=${{ inputs.phpcs-extensions }}
+        --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+      shell: bash
+    - name: Run coding standard default ruleset
+      if: ${{ !inputs.phpcs-ruleset }}
+      run: >
+        ./vendor/bin/phpcs
+        --report=checkstyle
+        --extensions=${{ inputs.phpcs-extensions }}
+        --standard=$GITHUB_ACTION_PATH/ruleset.xml
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+      shell: bash
+    - name: Run PHPMD analysis
+      run: >
+        ./vendor/bin/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        github 
+        ${{ inputs.phpmd-ruleset }}
+        --suffixes php,phtml
+      shell: bash
+    - name: Add problem matcher
+      run: echo '::add-matcher::${{ github.action_path }}/php-compatibility/problem-matcher.json'
+      shell: bash
+    - name: Run PHP Compatibility specific ruleset
+      if: ${{ inputs.php-compatibility-ruleset }}
+      run: >
+        ./vendor/bin/phpcs
+        --report=checkstyle
+        --extensions=php,phtml
+        --standard=$GITHUB_WORKSPACE${{ inputs.ruleset }}
+        --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+      shell: bash
+    - name: Run PHP Compatibility default ruleset
+      if: ${{ !inputs.php-compatibility-ruleset }}
+      run: >
+        ./vendor/bin/phpcs
+        --report=checkstyle
+        --extensions=php,phtml
+        --standard=$GITHUB_ACTION_PATH/ruleset.xml
+        --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+      shell: bash
+    - name: Run PHPStan analysis
+      run: >
+        ./vendor/bin/phpstan analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        --level ${{ inputs.phpstan-level }}
+        --error-format github
+        --configuration ${{ inputs.phpstan-configuration }}
+        --no-progress
+      shell: bash
