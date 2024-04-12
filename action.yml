@@ -153,22 +153,21 @@ runs:
       continue-on-error: true
     - name: Check for errors and exit if needed
       run: |
-        if [ -n ${{ steps.phpcs.outcome }} ]; then
-          phpcs=${{ steps.phpcs.outcome }}
-        else
-          phpcs=${{ steps.phpcs-default.outcome }}
-        fi
-
-        if [ -n ${{ steps.phpcompatibility.outcome }} ]; then
-          phpcompatibility=${{ steps.phpcompatibility.outcome }}
-        else
-          phpcompatibility=${{ steps.phpcompatibility-default.outcome }}
-        fi
-
-        phpmd=${{ steps.phpmd.outcome }}
-        phpstan=${{ steps.phpstan.outcome }}
+        echo "Step IDs:"
+        for step in ${{ toJson(steps) }}; do
+          echo "- $step"
+        done
         
-        if [[ $phpcs == "failure" || $phpcompatibility == "failure" || $phpmd == "failure" || $phpstan == "failure" ]]; then
+        steps=$(echo "${{ toJson(steps) }}" | jq -r 'keys[]')
+        for step_id in $steps; do
+          echo $step_id
+          echo "${{ steps.${step_id}.outcome }}"
+          if [[ "${{ steps.${step_id}.outcome }}" == "failure" ]]; then
+           echo "At least one step failed"
+          fi
+        done
+        
+        if [[ "${{ steps.phpcs.outcome }}" == "failure" || "${{ steps.phpcs-default.outcome }}" == "failure" || "${{ steps.phpmd.outcome }}" == "failure" || "${{ steps.phpcompatibility.outcome }}" == "failure" || "${{ steps.phpcompatibility-default.outcome }}" == "failure" || "${{ steps.phpstan.outcome }}" == "failure" ]]; then
           exit 1
         fi
       shell: bash
