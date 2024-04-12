@@ -153,20 +153,12 @@ runs:
       continue-on-error: true
     - name: Check for errors and exit if needed
       run: |
-        echo "Step IDs:"
-        for step in ${{ toJson(steps) }}; do
-          echo "- $step"
-        done
-        
         steps=$(echo "${{ toJson(steps) }}" | jq -r 'keys[]')
         for step_id in $steps; do
           echo $step_id
           if [[ "$(echo "${{ steps }}" | jq -r ".[\"$step_id\"].outcome")" == "failure" ]]; then
             echo "At least one step failed"
+            exit 1
           fi
         done
-        
-        if [[ "${{ steps.phpcs.outcome }}" == "failure" || "${{ steps.phpcs-default.outcome }}" == "failure" || "${{ steps.phpmd.outcome }}" == "failure" || "${{ steps.phpcompatibility.outcome }}" == "failure" || "${{ steps.phpcompatibility-default.outcome }}" == "failure" || "${{ steps.phpstan.outcome }}" == "failure" ]]; then
-          exit 1
-        fi
       shell: bash
