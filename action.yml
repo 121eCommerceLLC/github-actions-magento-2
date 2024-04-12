@@ -92,6 +92,7 @@ runs:
         ./vendor/bin/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Run coding standard default ruleset
       id: phpcs-default
       if: ${{ !inputs.phpcs-ruleset }}
@@ -99,12 +100,14 @@ runs:
         ./vendor/bin/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_ACTION_PATH/coding-standard/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Run PHPMD analysis
       id: phpmd
       run: |
         ./vendor/bin/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }} github ${{ inputs.phpmd-ruleset }} --suffixes php,phtml
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Add problem matcher
       run: echo '::add-matcher::${{ github.action_path }}/php-compatibility/problem-matcher.json'
       shell: bash
@@ -115,6 +118,7 @@ runs:
         ./vendor/bin/phpcs --report=checkstyle --extensions=php,phtml --standard=$GITHUB_WORKSPACE${{ inputs.ruleset }} --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Run PHP Compatibility default ruleset
       id: phpcompatibility-default
       if: ${{ !inputs.php-compatibility-ruleset }}
@@ -122,12 +126,14 @@ runs:
         ./vendor/bin/phpcs --report=checkstyle --extensions=php,phtml --standard=$GITHUB_ACTION_PATH/php-compatibility/ruleset.xml --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Run PHPStan analysis
       id: phpstan
       run: |
         ./vendor/bin/phpstan analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }} --level ${{ inputs.phpstan-level }} --error-format github --configuration ${{ inputs.phpstan-configuration }} --no-progress
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
+      continue-on-error: true
     - name: Check for errors and exit if needed
       run: |
         if [ -n "${{ steps.phpcs.outputs.exit_code }}" ]; then
