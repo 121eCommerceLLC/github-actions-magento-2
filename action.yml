@@ -137,6 +137,13 @@ runs:
     - name: Check for errors and exit if needed
       run: |
         
+        echo ${{ steps.phpcs.outcome }}
+        echo ${{ steps.phpcs-default.outcome }}
+        echo ${{ steps.phpcomatibility.outcome }}
+        echo ${{ steps.phpcomatibility-default.outcome }}
+        echo ${{ steps.phpmd.outcome }}
+        echo ${{ steps.phpstan.outcome }}
+        
         echo ${{ steps.phpcs.outputs.exit_code }}
         echo ${{ steps.phpcs-default.outputs.exit_code }}
         echo ${{ steps.phpcomatibility.outputs.exit_code }}
