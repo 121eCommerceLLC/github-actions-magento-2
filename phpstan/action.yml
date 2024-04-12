@@ -59,7 +59,7 @@ runs:
     - name: Restore Composer Cache
       if: ${{ inputs.skip-cache != 'true' }}
       id: cache
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
         key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
@@ -69,7 +69,7 @@ runs:
       shell: bash
     - name: Save Composer Cache
       if: ${{ steps.cache.outputs.cache-hit != 'true' && inputs.skip-cache != 'true' }}
-      uses: actions/cache/save@v3
+      uses: actions/cache/save@v4
       with:
         path: ${{ steps.composer.outputs.dir-cache }}
         key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
