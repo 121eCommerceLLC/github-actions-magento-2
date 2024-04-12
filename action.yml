@@ -93,7 +93,7 @@ runs:
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
     - name: Run coding standard default ruleset
-      id: phpcs
+      id: phpcs-default
       if: ${{ !inputs.phpcs-ruleset }}
       run: |
         ./vendor/bin/phpcs --report=checkstyle --extensions=${{ inputs.phpcs-extensions }} --standard=$GITHUB_ACTION_PATH/coding-standard/ruleset.xml $GITHUB_WORKSPACE${{ inputs.path-to-code }}
@@ -116,7 +116,7 @@ runs:
         echo "::set-output name=exit_code::$exit_code"
       shell: bash
     - name: Run PHP Compatibility default ruleset
-      id: phpcompatibility
+      id: phpcompatibility-default
       if: ${{ !inputs.php-compatibility-ruleset }}
       run: |
         ./vendor/bin/phpcs --report=checkstyle --extensions=php,phtml --standard=$GITHUB_ACTION_PATH/php-compatibility/ruleset.xml --runtime-set testVersion ${{ inputs.php-compatibility-test-versions }} $GITHUB_WORKSPACE${{ inputs.path-to-code }}
@@ -130,9 +130,19 @@ runs:
       shell: bash
     - name: Check for errors and exit if needed
       run: |
-        phpcs=${{ steps.phpcs.outputs.exit_code }}
+        if [ -n "${{ steps.phpcs.outputs.exit_code }}" ]; then
+          phpcs=${{ steps.phpcs.outputs.exit_code }}
+        else
+          phpcs=${{ steps.phpcs-default.outputs.exit_code }}
+        fi
+        
+        if [ -n "${{ steps.phpcomatibility.outputs.exit_code }}" ]; then
+          phpcomatibility=${{ steps.phpcomatibility.outputs.exit_code }}
+        else
+          phpcomatibility=${{ steps.phpcomatibility-default.outputs.exit_code }}
+        fi
+
         phpmd=${{ steps.phpmd.outputs.exit_code }}
-        phpcomatibility=${{ steps.phpcomatibility.outputs.exit_code }}
         phpstan=${{ steps.phpstan.outputs.exit_code }}
 
         if [ $phpcs -ne 0 ] || [ $phpmd -ne 0 ] || [ $phpcomatibility -ne 0 ] || [ $phpstan -ne 0 ]; then
