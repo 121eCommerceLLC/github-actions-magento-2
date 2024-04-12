@@ -31,7 +31,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/coding-standard@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -87,7 +87,7 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
   
-  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used, with the exception of some annoying, but not mandatory rules.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used, with the exception of some annoying, but not mandatory rules.
   <br />
   
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
@@ -124,7 +124,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -166,7 +166,7 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
   <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
@@ -202,7 +202,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -229,7 +229,7 @@ jobs:
   Default: `./dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/mess-detector/ruleset.xml) based on the [Magento 2](https://github.com/magento/magento2/blob/2.4.6/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml) is used.
   <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://phpmd.org/documentation/creating-a-ruleset.html) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
@@ -253,14 +253,14 @@ jobs:
     name: Mess Detector - Code
     runs-on: ubuntu-latest
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector-full@v3
         with:
           path-to-code: /app/code
   mess-detector-design:
     name: Mess Detector - Design
     runs-on: ubuntu-latest
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/mess-detector@v3
         with:
           path-to-code: /app/design
 ```
@@ -294,7 +294,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/php-compatibility@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -337,7 +337,7 @@ jobs:
   Default: `There is no default value, the basic ruleset will be used.`
   <br />
 
-  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v2/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used, with the exception of some annoying, but not mandatory rules.
+  The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used, with the exception of some annoying, but not mandatory rules.
   <br />
 
   In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
@@ -390,7 +390,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/phpstan@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -481,7 +481,7 @@ jobs:
       matrix:
         path-to-code: [ /app/code, /app/design ]
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/inline-styles@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/inline-styles@v3
         with:
           path-to-code: ${{ matrix.path-to-code }}
 ```
@@ -533,7 +533,7 @@ jobs:
     name: Unnecessary Files
     runs-on: ubuntu-latest
     steps:
-      - uses: 121eCommerceLLC/github-actions-magento-2/unnecessary-files@v2
+      - uses: 121eCommerceLLC/github-actions-magento-2/unnecessary-files@v3
 ```
 
 #### Available Arguments
