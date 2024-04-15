@@ -104,7 +104,7 @@ runs:
       shell: bash
     - name: Check PHP syntax
       id: php-linter
-      if: ${{ inputs.with-php-linter }}
+      if: ${{ inputs.with-php-linter == 'true' }}
       run: |
         errors_found=()
         find $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }} \( -name "*.php" -o -name "*.phtml" \) -exec php -l {} + 2>&1 | while read line
@@ -157,7 +157,7 @@ runs:
       continue-on-error: true
     - name: Run PHPMD analysis
       id: phpmd
-      if: ${{ inputs.with-phpmd }}
+      if: ${{ inputs.with-phpmd == 'true' }}
       run: >
         ./vendor/bin/phpmd
         $GITHUB_WORKSPACE${{ inputs.path-to-code }},$GITHUB_WORKSPACE${{ inputs.path-to-design }}
@@ -195,7 +195,7 @@ runs:
       continue-on-error: true
     - name: Run PHPStan analysis
       id: phpstan
-      if: ${{ inputs.with-phpstan }}
+      if: ${{ inputs.with-phpstan == 'true' }}
       run: >
         ./vendor/bin/phpstan
         analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
