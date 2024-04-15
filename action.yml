@@ -107,7 +107,7 @@ runs:
       if: ${{ inputs.with-php-linter }}
       run: |
         errors_found=()
-        find ${{inputs.path-to-code}} ${{inputs.path-to-design}} \( -name "*.php" -o -name "*.phtml" \) -exec php -l {} + 2>&1 | while read line
+        find $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }} \( -name "*.php" -o -name "*.phtml" \) -exec php -l {} + 2>&1 | while read line
         do
           if echo "$line" | grep -qE "Errors parsing|Parse error: $"
           then
