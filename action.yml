@@ -20,7 +20,19 @@ inputs:
   path-to-code:
     description: 'Relative path to the code.'
     required: false
-    default: '/'
+    default: '/app/code'
+  path-to-design:
+    description: 'Relative path to the design.'
+    required: false
+    default: '/app/design'
+  with-php-linter:
+    description: 'Run PHP Linter (true/false).'
+    required: false
+    default: 'false'
+  with-phpcs:
+    description: 'Run PHPCS (true/false).'
+    required: false
+    default: 'false'
   phpcs-extensions:
     description: 'PHPCS: List of file extensions to check.'
     required: false
@@ -29,14 +41,26 @@ inputs:
     description: 'PHPCS: Relative path to ruleset file.'
     required: false
     default: ''
+  with-phpmd:
+    description: 'Run PHPMD (true/false).'
+    required: false
+    default: 'false'
   phpmd-ruleset:
     description: 'PHPMD: Relative path to ruleset file.'
     required: false
     default: './dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml'
+  with-php-compatibility:
+    description: 'Run PHP Compatibility (true/false).'
+    required: false
+    default: 'false'
   php-compatibility-ruleset:
     description: 'PHP Compatibility: Relative path to ruleset file.'
     required: false
     default: ''
+  with-phpstan:
+    description: 'Run PHPStan (true/false).'
+    required: false
+    default: 'false'
   phpstan-configuration:
     description: 'PHPStan: Relative path to configuration file.'
     required: false
@@ -69,45 +93,74 @@ runs:
       with:
         composer-options: --prefer-dist --no-progress
         ignore-cache: ${{ inputs.skip-cache }}
+    - name: Register Coding Standards
+      run: ./vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/coding-standard/Ecommerce121
+      shell: bash
     - name: Run "bin/magento setup:di:compile"
       if: ${{ inputs.setup-di-compile == 'true' }}
       run: |
         ./bin/magento setup:di:compile
         composer dump-autoload -o --apcu
       shell: bash
+    - name: Check PHP syntax
+      id: php-linter
+      if: ${{ inputs.with-php-linter }}
+      run: |
+        errors_found=()
+        find ${{inputs.path-to-code}} ${{inputs.path-to-design}} \( -name "*.php" -o -name "*.phtml" \) -exec php -l {} + 2>&1 | while read line
+        do
+          if echo "$line" | grep -qE "Errors parsing|Parse error: $"
+          then
+            continue
+          fi
+        
+          if echo "$line" | grep -q "Parse error:"
+          then
+            file=$(echo "$line" | sed -n -e 's/.* in \(.*\) on line.*/\1/p')
+            line_number=$(echo "$line" | sed -n -e 's/.*on line \([0-9]*\).*/\1/p')
+            error_message=$(echo "$line" | grep -o "syntax error,.*" | sed -e 's/ in .*//')
+        
+            error_key="${file}:${line_number}:${error_message}"
+        
+            if [[ ! " ${errors_found[@]} " =~ " ${error_key} " ]]; then
+              errors_found+=("$error_key")
+              echo "::error file=$file,line=$line_number::Parse error: $error_message"
+            fi
+          fi
+        done
+      shell: bash
+      continue-on-error: true
     - name: Add problem matcher
       run: echo '::add-matcher::${{ github.action_path }}/coding-standard/problem-matcher.json'
       shell: bash
-    - name: Register Coding Standards
-      run: ./vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/,../../phpcompatibility/php-compatibility,../../magento/php-compatibility-fork,$GITHUB_ACTION_PATH/coding-standard/Ecommerce121
-      shell: bash
     - name: Run coding standard specific ruleset
       id: phpcs
-      if: ${{ inputs.phpcs-ruleset }}
+      if: ${{ inputs.with-phpcs == 'true' && inputs.phpcs-ruleset }}
       run: >
         ./vendor/bin/phpcs
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
         --standard=$GITHUB_WORKSPACE${{ inputs.phpcs-ruleset }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
       shell: bash
       continue-on-error: true
     - name: Run coding standard default ruleset
       id: phpcs-default
-      if: ${{ !inputs.phpcs-ruleset }}
+      if: ${{ inputs.with-phpcs == 'true' && !inputs.phpcs-ruleset }}
       run: >
         ./vendor/bin/phpcs
         --report=checkstyle
         --extensions=${{ inputs.phpcs-extensions }}
         --standard=$GITHUB_ACTION_PATH/coding-standard/ruleset.xml
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
       shell: bash
       continue-on-error: true
     - name: Run PHPMD analysis
       id: phpmd
+      if: ${{ inputs.with-phpmd }}
       run: >
         ./vendor/bin/phpmd
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }},$GITHUB_WORKSPACE${{ inputs.path-to-design }}
         github
         ${{ inputs.phpmd-ruleset }}
         --suffixes php,phtml
@@ -118,33 +171,34 @@ runs:
       shell: bash
     - name: Run PHP Compatibility specific ruleset
       id: phpcompatibility
-      if: ${{ inputs.php-compatibility-ruleset }}
+      if: ${{ inputs.with-php-compatibility == 'true' && inputs.php-compatibility-ruleset }}
       run: >
         ./vendor/bin/phpcs
         --report=checkstyle
         --extensions=php,phtml
         --standard=$GITHUB_WORKSPACE${{ inputs.ruleset }}
         --runtime-set testVersion ${{ inputs.php-version }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
       shell: bash
       continue-on-error: true
     - name: Run PHP Compatibility default ruleset
       id: phpcompatibility-default
-      if: ${{ !inputs.php-compatibility-ruleset }}
+      if: ${{ inputs.with-php-compatibility == 'true' && !inputs.php-compatibility-ruleset }}
       run: >
         ./vendor/bin/phpcs
         --report=checkstyle
         --extensions=php,phtml
         --standard=$GITHUB_ACTION_PATH/php-compatibility/ruleset.xml
         --runtime-set testVersion ${{ inputs.php-version }}
-        $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
       shell: bash
       continue-on-error: true
     - name: Run PHPStan analysis
       id: phpstan
+      if: ${{ inputs.with-phpstan }}
       run: >
         ./vendor/bin/phpstan
-        analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }} $GITHUB_WORKSPACE${{ inputs.path-to-design }}
         --level ${{ inputs.phpstan-level }}
         --error-format github
         --configuration ${{ inputs.phpstan-configuration }}
@@ -154,6 +208,7 @@ runs:
     - name: Check for errors and exit if needed
       run: |
         if [[ \
+          "${{ steps.php-linter.outcome }}" == "failure" || \
           "${{ steps.phpcs.outcome }}" == "failure" || \
           "${{ steps.phpcs-default.outcome }}" == "failure" || \
           "${{ steps.phpmd.outcome }}" == "failure" || \
