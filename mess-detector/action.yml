@@ -20,7 +20,7 @@ inputs:
   phpmd-version:
     description: 'PHP Mess Detector Composer Version.'
     required: false
-    default: '*'
+    default: '3.x-dev'
   path-to-code:
     description: 'Relative path to the code.'
     required: false
