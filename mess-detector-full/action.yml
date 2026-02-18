@@ -65,5 +65,5 @@ runs:
         path: ${{ steps.composer.outputs.dir-cache }}
         key: ${{ runner.os }};composer.lock=${{ steps.composer.outputs.composer-lock-hash }};
     - name: Run PHPMD analysis
-      run: ${{ steps.composer.outputs.dir-bin }}/phpmd analyze $GITHUB_WORKSPACE${{ inputs.path-to-code }} --format github --ruleset ${{ inputs.phpmd-ruleset }} --suffixes php,phtml
+      run: ./vendor/bin/phpmd analyze $GITHUB_WORKSPACE${{ inputs.path-to-code }} --format github --ruleset ${{ inputs.phpmd-ruleset }} --suffixes php,phtml
       shell: bash
