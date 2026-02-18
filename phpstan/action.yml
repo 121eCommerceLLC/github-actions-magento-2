@@ -81,7 +81,7 @@ runs:
       shell: bash
     - name: Run PHPStan analysis
       run: >
-        ./vendor/bin/phpstan analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }}
+        ${{ steps.composer.outputs.dir-bin }}/phpstan analyse $GITHUB_WORKSPACE${{ inputs.path-to-code }}
         --level ${{ inputs.phpstan-level }}
         --error-format github
         --configuration ${{ inputs.phpstan-configuration }}
