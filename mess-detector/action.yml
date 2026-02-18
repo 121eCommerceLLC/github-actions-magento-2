@@ -20,7 +20,7 @@ inputs:
   phpmd-version:
     description: 'PHP Mess Detector Composer Version.'
     required: false
-    default: '3.x-dev'
+    default: '*'
   path-to-code:
     description: 'Relative path to the code.'
     required: false
@@ -75,9 +75,9 @@ runs:
         key: ${{ runner.os }};phpmd=${{ inputs.phpmd-version }};
     - name: Run specific ruleset
       if:  ${{ inputs.phpmd-ruleset }}
-      run: ${{ steps.composer.outputs.dir-bin }}/phpmd analyze $GITHUB_WORKSPACE${{ inputs.path-to-code }} --format github --ruleset $GITHUB_WORKSPACE${{ inputs.phpmd-ruleset }} --suffixes php,phtml
+      run: ${{ steps.composer.outputs.dir-bin }}/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }} github $GITHUB_ACTION_PATH/ruleset.xml --suffixes php,phtml
       shell: bash
     - name: Run default ruleset
       if:  ${{ !inputs.phpmd-ruleset }}
-      run: ${{ steps.composer.outputs.dir-bin }}/phpmd analyze $GITHUB_WORKSPACE${{ inputs.path-to-code }} --format github --ruleset $GITHUB_ACTION_PATH/ruleset.xml --suffixes php,phtml
+      run: ${{ steps.composer.outputs.dir-bin }}/phpmd $GITHUB_WORKSPACE${{ inputs.path-to-code }} github $GITHUB_ACTION_PATH/ruleset.xml --suffixes php,phtml
       shell: bash
