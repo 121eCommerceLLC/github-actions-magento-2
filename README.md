@@ -74,7 +74,7 @@ jobs:
   Default: `php,phtml,graphqls/GraphQL,less/CSS,xml,js/PHP`
   <br />
   
-  The argument is used to provide an opportunity to specify a custom list of extensions for the `--extensions` argument for the `phpcs` [tool](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#specifying-valid-file-extensions).
+  The argument is used to provide an opportunity to specify a custom list of extensions for the `--extensions` argument for the `phpcs` [tool](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Advanced-Usage#specifying-valid-file-extensions).
   <br />
   
   By default, the list of extensions has already been prepared according to the [Magento Coding Standard](https://github.com/magento/magento-coding-standard/blob/v31/Magento2/ruleset.xml#L6).
@@ -90,7 +90,7 @@ jobs:
   The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/coding-standard/ruleset.xml) based on the [Magento Coding Standard](https://github.com/magento/magento-coding-standard) is used, with the exception of some annoying, but not mandatory rules.
   <br />
   
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
   
   Example: `phpcs-ruleset: /path/to/your/ruleset.xml`
@@ -340,7 +340,7 @@ jobs:
   The argument is used to provide an opportunity to specify a custom ruleset. By default, a [basic ruleset](https://github.com/121eCommerceLLC/github-actions-magento-2/blob/v3/php-compatibility/ruleset.xml) based on the [PHP Compatibility](https://github.com/PHPCompatibility/PHPCompatibility) is used, with the exception of some annoying, but not mandatory rules.
   <br />
 
-  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
+  In order to use your own ruleset, you need to create your own ruleset file according to the [instructions](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Annotated-Ruleset) and add it to the repository file. Then you need to provide the absolute path to this file relative to the repository starting with the slash `/` character.
   <br />
 
   Example: `php-compatibility-ruleset: /path/to/your/ruleset.xml`
